@@ -19,7 +19,6 @@
     __block BOOL ret = NO;
     
    // NSString *url_str = [NSString stringWithFormat:@"%@t=%@&results=%@$%@$%@$%@",URL,type,adcd,date,start,end];
-    NSString *str = [NSString stringWithFormat:@"%@$%@$%@$%@",date,start,end];
    // NSURL *url = [NSURL URLWithString:url_str];
     
     /*
@@ -47,21 +46,25 @@
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
+    NSString *str = [NSString stringWithFormat:@"%@$%@$%@$%@",adcd,date,start,end];
     NSDictionary *dic = @{@"t":type,
-                          @"reeults":str};
-    AFHTTPRequestOperation *operation = [manager POST:URL parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                          @"results":str};
+    AFHTTPRequestOperation *operation = [manager GET:URL parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
     } failure:nil];
     [operation waitUntilFinished];
     if (operation.responseData != nil) {
-        ret = YES;
-        NSArray *jsonArr = [NSJSONSerialization JSONObjectWithData:operation.responseData options:NSJSONReadingMutableLeaves error:nil];
-        
-        //抛出去一个通知
-        [[NSNotificationCenter defaultCenter] postNotificationName:kLoadCompleteNotification object:jsonArr];
+            datas = [NSJSONSerialization JSONObjectWithData:operation.responseData options:NSJSONReadingMutableContainers error:nil];
+            ret = YES;
+       
     }
     
     return ret;
+}
+
+static NSArray *datas = nil;
++ (NSArray *)requestRainData
+{
+    return datas;
 }
 
 @end

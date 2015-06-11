@@ -98,7 +98,7 @@
                         <viewControllerLayoutGuide type="top" id="w4S-Ju-R7a"/>
                         <viewControllerLayoutGuide type="bottom" id="WmH-Mv-NIF"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="T5H-8a-MjI">
+                    <view key="view" contentMode="scaleToFill" id="T5H-8a-MjI" customClass="UIControl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -148,8 +148,15 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <action selector="tapbackground:" destination="8vg-BT-wWC" eventType="touchDown" id="Err-Ch-JAS"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="rsb-dA-xXb"/>
+                    <connections>
+                        <outlet property="pswField" destination="yHt-zp-KNb" id="je1-zs-4i7"/>
+                        <outlet property="username" destination="C9s-Dt-LcV" id="cjA-zy-2Xc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9ib-Cy-yuf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -416,7 +423,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ogg-yK-Nc1">
-                                <rect key="frame" x="124" y="69" width="70" height="90"/>
+                                <rect key="frame" x="124" y="48" width="70" height="90"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="实时雨情" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kth-QN-bL4">
                                         <rect key="frame" x="0.0" y="70" width="70" height="20"/>
@@ -439,7 +446,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lmO-ji-jjr">
-                                <rect key="frame" x="228" y="69" width="70" height="90"/>
+                                <rect key="frame" x="228" y="48" width="70" height="90"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="实时水位" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ba-DF-lFN">
                                         <rect key="frame" x="0.0" y="70" width="70" height="20"/>
@@ -462,7 +469,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LsA-9q-02U">
-                                <rect key="frame" x="22" y="179" width="70" height="90"/>
+                                <rect key="frame" x="22" y="158" width="70" height="90"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ke1-i2-xvc">
                                         <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
@@ -486,7 +493,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PBo-gT-uIl">
-                                <rect key="frame" x="124" y="179" width="70" height="90"/>
+                                <rect key="frame" x="124" y="158" width="70" height="90"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFw-me-wTg">
                                         <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
@@ -509,7 +516,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qVu-ju-WDc">
-                                <rect key="frame" x="124" y="288" width="70" height="90"/>
+                                <rect key="frame" x="124" y="267" width="70" height="90"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="天气预报" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="re9-LX-lmG">
                                         <rect key="frame" x="0.0" y="70" width="70" height="21"/>
@@ -532,7 +539,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k5v-fO-b7I">
-                                <rect key="frame" x="22" y="69" width="70" height="90"/>
+                                <rect key="frame" x="22" y="48" width="70" height="90"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="通知公告" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pnR-IJ-92U">
                                         <rect key="frame" x="0.0" y="70" width="70" height="20"/>
@@ -556,7 +563,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0KD-71-1cV">
-                                <rect key="frame" x="22" y="288" width="70" height="90"/>
+                                <rect key="frame" x="22" y="267" width="70" height="90"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XKi-vq-kvc">
                                         <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
@@ -579,7 +586,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B9Y-Bf-Ldd">
-                                <rect key="frame" x="228" y="179" width="70" height="90"/>
+                                <rect key="frame" x="228" y="158" width="70" height="90"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GAY-sp-rlh">
                                         <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
@@ -602,7 +609,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RuG-sD-TkW">
-                                <rect key="frame" x="228" y="288" width="70" height="90"/>
+                                <rect key="frame" x="228" y="267" width="70" height="90"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="气象国土" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iW8-EY-SzZ">
                                         <rect key="frame" x="0.0" y="70" width="70" height="20"/>
@@ -631,7 +638,7 @@
                             <constraint firstItem="PBo-gT-uIl" firstAttribute="leading" secondItem="qVu-ju-WDc" secondAttribute="leading" id="0dB-JI-jFs"/>
                             <constraint firstItem="PBo-gT-uIl" firstAttribute="leading" secondItem="LsA-9q-02U" secondAttribute="trailing" constant="32" id="23l-pC-KvE"/>
                             <constraint firstItem="Ogg-yK-Nc1" firstAttribute="leading" secondItem="k5v-fO-b7I" secondAttribute="trailing" constant="32" id="8gd-7o-pQt"/>
-                            <constraint firstItem="Ogg-yK-Nc1" firstAttribute="top" secondItem="qWV-IA-CXb" secondAttribute="top" constant="69" id="EJH-Uf-5nK"/>
+                            <constraint firstItem="Ogg-yK-Nc1" firstAttribute="top" secondItem="qWV-IA-CXb" secondAttribute="top" constant="48" id="EJH-Uf-5nK"/>
                             <constraint firstItem="RuG-sD-TkW" firstAttribute="top" secondItem="B9Y-Bf-Ldd" secondAttribute="bottom" constant="19" id="F0w-J3-Efd"/>
                             <constraint firstItem="B9Y-Bf-Ldd" firstAttribute="leading" secondItem="PBo-gT-uIl" secondAttribute="trailing" constant="34" id="G5d-3b-K6H"/>
                             <constraint firstItem="qVu-ju-WDc" firstAttribute="top" secondItem="PBo-gT-uIl" secondAttribute="bottom" constant="19" id="HAE-tU-a8M"/>
@@ -643,9 +650,9 @@
                             <constraint firstItem="B9Y-Bf-Ldd" firstAttribute="top" secondItem="lmO-ji-jjr" secondAttribute="bottom" constant="20" id="a1f-VG-cbL"/>
                             <constraint firstAttribute="trailing" secondItem="RuG-sD-TkW" secondAttribute="trailing" constant="22" id="cLe-vD-YjM"/>
                             <constraint firstItem="PBo-gT-uIl" firstAttribute="top" secondItem="Ogg-yK-Nc1" secondAttribute="bottom" constant="20" id="gkQ-3a-2Yu"/>
-                            <constraint firstItem="k5v-fO-b7I" firstAttribute="top" secondItem="qWV-IA-CXb" secondAttribute="top" constant="69" id="jh7-6f-bla"/>
+                            <constraint firstItem="k5v-fO-b7I" firstAttribute="top" secondItem="qWV-IA-CXb" secondAttribute="top" constant="48" id="jh7-6f-bla"/>
                             <constraint firstItem="k5v-fO-b7I" firstAttribute="leading" secondItem="qWV-IA-CXb" secondAttribute="leading" constant="22" id="jta-dY-1mx"/>
-                            <constraint firstItem="lmO-ji-jjr" firstAttribute="top" secondItem="qWV-IA-CXb" secondAttribute="top" constant="69" id="lq8-bZ-7xq"/>
+                            <constraint firstItem="lmO-ji-jjr" firstAttribute="top" secondItem="qWV-IA-CXb" secondAttribute="top" constant="48" id="lq8-bZ-7xq"/>
                             <constraint firstItem="PBo-gT-uIl" firstAttribute="leading" secondItem="LsA-9q-02U" secondAttribute="trailing" constant="32" id="nPb-ZR-cq6"/>
                             <constraint firstItem="B9Y-Bf-Ldd" firstAttribute="leading" secondItem="RuG-sD-TkW" secondAttribute="leading" id="ori-o2-28s"/>
                             <constraint firstItem="RuG-sD-TkW" firstAttribute="leading" secondItem="qVu-ju-WDc" secondAttribute="trailing" constant="34" id="p3z-vx-Qml"/>

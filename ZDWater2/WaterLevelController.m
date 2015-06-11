@@ -89,14 +89,6 @@ static BOOL ret = NO;
                 //进入到主线程，更新UI
                 [SVProgressHUD dismissWithError:@"加载失败"];
                 ret = NO;
-                
-//                waterLevels = [WaterSituation requestWaterData];
-//                ret = YES;
-//                if (waterLevels.count == 0) {
-//                    ret = NO;
-//                    waterLevels = [NSArray arrayWithObject:@"当前暂无水情数据"];
-//                }
-//                [self.myTableView reloadData];
             });
         }
     });

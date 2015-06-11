@@ -47,6 +47,17 @@
     self.title = [NSString stringWithFormat:@"浙东引水 %@",version];
     [self buttonSetting];
     
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = (CGRect){0,0,40,20};
+    button.layer.borderColor = [UIColor whiteColor].CGColor;
+    button.layer.borderWidth = 1.0f;
+    button.titleLabel.font = [UIFont systemFontOfSize:14];
+    [button setTitle:@"设置" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(SettingAction:) forControlEvents:UIControlEventTouchDragInside];
+    
+    UIBarButtonItem *setItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = setItem;
+    
     //修改返回按钮
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     backItem.title = @"返回";
@@ -58,14 +69,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)SettingAction:(UIButton *)button
+{
+    
 }
-*/
 
 @end

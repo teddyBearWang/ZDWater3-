@@ -74,6 +74,7 @@
 		9F3852C61B1EA93B005E3B8B /* QualityDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3852C51B1EA93B005E3B8B /* QualityDetailController.m */; };
 		9F3852CB1B1ED662005E3B8B /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9F3852C81B1ED662005E3B8B /* SVProgressHUD.bundle */; };
 		9F3852CC1B1ED662005E3B8B /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3852CA1B1ED662005E3B8B /* SVProgressHUD.m */; };
+		9F3A71C51B299C790032677E /* LoginToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3A71C41B299C790032677E /* LoginToken.m */; };
 		9F3FE8D41B21965800CC49F4 /* filter.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F3FE8D31B21965700CC49F4 /* filter.png */; };
 		9F3FE8D61B21965D00CC49F4 /* select.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F3FE8D51B21965D00CC49F4 /* select.png */; };
 		9F3FE8E11B219B8D00CC49F4 /* cloudy.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F3FE8D71B219B8D00CC49F4 /* cloudy.png */; };
@@ -215,6 +216,8 @@
 		9F3852C81B1ED662005E3B8B /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		9F3852C91B1ED662005E3B8B /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		9F3852CA1B1ED662005E3B8B /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		9F3A71C31B299C790032677E /* LoginToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginToken.h; sourceTree = "<group>"; };
+		9F3A71C41B299C790032677E /* LoginToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginToken.m; sourceTree = "<group>"; };
 		9F3FE8D31B21965700CC49F4 /* filter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filter.png; sourceTree = "<group>"; };
 		9F3FE8D51B21965D00CC49F4 /* select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select.png; sourceTree = "<group>"; };
 		9F3FE8D71B219B8D00CC49F4 /* cloudy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloudy.png; sourceTree = "<group>"; };
@@ -458,6 +461,8 @@
 				9F3FE8EC1B219C3300CC49F4 /* WeatherObject.m */,
 				9F9159051B25581600CFA0DB /* QiXiangObject.h */,
 				9F9159061B25581600CFA0DB /* QiXiangObject.m */,
+				9F3A71C31B299C790032677E /* LoginToken.h */,
+				9F3A71C41B299C790032677E /* LoginToken.m */,
 			);
 			name = http;
 			sourceTree = "<group>";
@@ -721,6 +726,7 @@
 			files = (
 				9F3851D91B1E8A14005E3B8B /* AppDelegate.m in Sources */,
 				9F3852B01B1EA077005E3B8B /* WaterSituation.m in Sources */,
+				9F3A71C51B299C790032677E /* LoginToken.m in Sources */,
 				9F38525E1B1E9E20005E3B8B /* UUBar.m in Sources */,
 				9F3852CC1B1ED662005E3B8B /* SVProgressHUD.m in Sources */,
 				9F3852B11B1EA077005E3B8B /* WaterYield.m in Sources */,

@@ -19,6 +19,7 @@
 {
     NSArray *listData; //tableVIew的数据源
     NSMutableArray *sourceDatas;//所有的数据
+    BOOL ret;
 }
 @property (strong, nonatomic) UITableView *myTableView;
 
@@ -52,11 +53,7 @@
     self.myTableView.delegate = self;
     self.myTableView.dataSource = self;
     [self.view addSubview:self.myTableView];
-    NSDate *now = [NSDate date];
-    NSString *date_str = [self requestDate:now];
     
-    BOOL ret = [RainObject fetchWithType:@"GetYqInfo" withArea:@"33" withDate:date_str withstart:@"0" withEnd:@"10000"];
-    [SVProgressHUD showWithStatus:@"加载中..."];
     
     UIView *leftView = [[UIView alloc] initWithFrame:(CGRect){0,0,70,20}];
     UIButton *filter_btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -76,20 +73,39 @@
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:leftView];
     self.navigationItem.rightBarButtonItem = item;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadCompleteAction:) name:kLoadCompleteNotification object:nil];
+  //  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadCompleteAction:) name:kLoadCompleteNotification object:nil];
+    NSDate *now = [NSDate date];
+    NSString *date_str = [self requestDate:now];
+    [self refresh:date_str];
 
+}
+
+- (void)refresh:(NSString *)date_str
+{
+ 
+    [SVProgressHUD showWithStatus:@"加载中..."];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        if([RainObject fetchWithType:@"GetYqInfo" withArea:@"33" withDate:date_str withstart:@"0" withEnd:@"10000"]){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SVProgressHUD dismissWithSuccess:@"加载成功"];
+                //将获取到得数据传递给tableView的数据源
+                ret = YES;
+                listData = [RainObject requestRainData];
+                sourceDatas = [NSMutableArray arrayWithArray:listData];
+                [self.myTableView reloadData];
+            });
+        }else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SVProgressHUD dismissWithError:@"加载失败"];
+                ret = NO;
+            });
+        }
+    });
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-//页面消失的时候
-- (void)viewWillDisappear:(BOOL)animated
-{
-    //移除详细对象
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoadCompleteNotification object:nil];
 }
 
 #pragma  mark - Private Method
@@ -114,27 +130,16 @@
     [formatter setDateFormat:@"yyyy-MM-dd"];
     NSString *date_str = [formatter stringFromDate:date];
     return date_str;
-    
 }
 
-- (void)loadCompleteAction:(NSNotification *)notification
-{
-    NSArray *array = (NSArray *)notification.object;
-    sourceDatas = [NSMutableArray arrayWithArray:array];
-    [SVProgressHUD dismissWithSuccess:@"加载成功"];
-    //将获取到得数据传递给tableView的数据源
-    listData = [NSArray arrayWithArray:sourceDatas];
-    [self.myTableView reloadData];
-    
-}
+
 
 #pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
         CustomDateActionSheet *sheet = (CustomDateActionSheet *)actionSheet;
-       [RainObject fetchWithType:@"GetYqInfo" withArea:@"33" withDate:sheet.selectedTime withstart:@"0" withEnd:@"10000"];
-         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadCompleteAction:) name:kLoadCompleteNotification object:nil];
+        [self refresh:sheet.selectedTime];
     }
 }
 
@@ -147,14 +152,15 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    RainCell *cell = (RainCell *)[[[NSBundle mainBundle] loadNibNamed:@"Rain" owner:self options:nil] lastObject];
-    NSDictionary *dic = [listData objectAtIndex:indexPath.row];
-    cell.stationName.text = [[dic objectForKey:@"Stnm"] isEqual:@""]?@"--" : [dic objectForKey:@"Stnm"];
-    cell.oneHour.text = [[dic objectForKey:@"Last1Hours"] isEqual:@""] ? @"--" :[dic objectForKey:@"Last1Hours"];
     
-    cell.threeHour.text = [[dic objectForKey:@"Last3Hours"] isEqual:@""] ? @"--" : [dic objectForKey:@"Last3Hours"];
-    cell.today.text = [[dic objectForKey:@"Last6Hours"] isEqual:@""] ?@"--" : [dic objectForKey:@"Last6Hours"];
-    return cell;
+        RainCell *cell = (RainCell *)[[[NSBundle mainBundle] loadNibNamed:@"Rain" owner:self options:nil] lastObject];
+        NSDictionary *dic = [listData objectAtIndex:indexPath.row];
+        cell.stationName.text = [[dic objectForKey:@"Stnm"] isEqual:@""]?@"--" : [dic objectForKey:@"Stnm"];
+        cell.oneHour.text = [[dic objectForKey:@"Last1Hours"] isEqual:@""] ? @"--" :[dic objectForKey:@"Last1Hours"];
+        
+        cell.threeHour.text = [[dic objectForKey:@"Last3Hours"] isEqual:@""] ? @"--" : [dic objectForKey:@"Last3Hours"];
+        cell.today.text = [[dic objectForKey:@"Last6Hours"] isEqual:@""] ?@"--" : [dic objectForKey:@"Last6Hours"];
+        return cell;
 }
 
 //这样的话，headView不随着cell滚动

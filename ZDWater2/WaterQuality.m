@@ -54,7 +54,7 @@
     [operation waitUntilFinished];
     if (operation.responseData != 0) {
         ret = YES;
-        _waterData = [NSJSONSerialization JSONObjectWithData:operation.responseData options:NSJSONReadingMutableLeaves error:nil];
+        _waterData = [NSJSONSerialization JSONObjectWithData:operation.responseData options:NSJSONReadingMutableContainers error:nil];
     }
     
     return ret;

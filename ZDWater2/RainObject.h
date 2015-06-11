@@ -19,10 +19,10 @@
 //获取水情列表数据
 + (BOOL)fetchWithType:(NSString *)type withArea:(NSString *)adcd withDate:(NSString *)date withstart:(NSString *)start withEnd:(NSString *)end;
 
-/*
+
 + (NSArray *)requestRainData;
  
  
-*/
+
 
 @end
