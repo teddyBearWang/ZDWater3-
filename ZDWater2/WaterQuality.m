@@ -11,6 +11,7 @@
 
 //#define URL @"http://115.236.2.245:38027/Data.ashx?t=GetSzInfo&results=2015-04-25$2015-04-26"
 
+static AFHTTPRequestOperation *operation = nil;
 @implementation WaterQuality
 
 
@@ -21,35 +22,12 @@
    // NSString *url_str = [NSString stringWithFormat:@"%@t=%@&results=%@$%@",URL,type,start,end];
     NSString *str = [NSString stringWithFormat:@"%@$%@",start,end];
     
-    /*
-    NSURL *url = [NSURL URLWithString:url_str];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    
-    [request setCompletionBlock:^{
-        //成功
-        if (request.responseStatusCode == 200) {
-            ret = YES;
-            NSData *json = (NSData *)request.responseData;
-            NSArray *jsonArr = [NSJSONSerialization JSONObjectWithData:json options:NSJSONReadingMutableLeaves error:nil];
-            _waterData = jsonArr;
-
-        }
-        
-    }];
-    
-    [request setFailedBlock:^{
-        //失败
-        ret = NO;
-    }];
-    
-    [request startSynchronous];
-    */
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *parameter = @{@"t":type,
                                 @"results":str};
-    AFHTTPRequestOperation *operation = [manager POST:URL parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    operation = [manager POST:URL parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
     } failure:nil];
     [operation waitUntilFinished];
     if (operation.responseData != 0) {
@@ -65,6 +43,13 @@ static NSArray *_waterData = nil;
 + (NSArray *)RequestData
 {
     return _waterData;
+}
+
++ (void)cancelRequest
+{
+    if (operation != nil) {
+        [operation cancel];
+    }
 }
 
 @end

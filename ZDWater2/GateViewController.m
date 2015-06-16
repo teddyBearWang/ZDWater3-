@@ -36,13 +36,16 @@
         [invocation setArgument:&val atIndex:2];
         [invocation invoke];
     }
-   // [self.myTableView reloadData];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+
+
+- (void)viewWillDisappear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
-  
+    [super viewWillDisappear:animated];
+    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
+        [GateObject cancelRequest];
+    }
 }
 
 - (void)viewDidLoad {
@@ -69,9 +72,6 @@
             //获取网络数据失败
             dispatch_async(dispatch_get_main_queue(), ^{
                 [SVProgressHUD dismissWithError:@"加载失败"];
-               // listData = [GateObject requestGateDatas];
-              //  NSLog(@"-------------->>>>>>>>>>>%@",listData);
-                //[self.myTableView reloadData];
             });
         }
     });

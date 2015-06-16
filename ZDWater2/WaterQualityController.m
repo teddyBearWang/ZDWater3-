@@ -40,7 +40,14 @@
         [invocation invoke];
     }
     
-   // [self.myTableView reloadData];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
+        [WaterQuality cancelRequest];
+    }
 }
 
 - (void)viewDidLoad {

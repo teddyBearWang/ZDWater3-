@@ -18,4 +18,6 @@
 
 + (NSArray *)requestWithDatas;
 
++ (void)cancelRequest;
+
 @end

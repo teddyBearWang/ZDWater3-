@@ -22,7 +22,7 @@
 
 + (NSArray *)requestRainData;
  
- 
++ (void)cancelRequest;
 
 
 @end

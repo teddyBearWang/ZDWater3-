@@ -17,4 +17,6 @@
 
 + (NSArray *)requestGateDatas;
 
++ (void)cancelRequest;
+
 @end

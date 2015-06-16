@@ -10,14 +10,14 @@
 	<string>ZDWater2</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>1463E2A24B44136AFAB31C305F3F7E8A8D8817B3</key>
+		<key>785E2247FED4CBA5C63B8BCD169A9187F5FA0111</key>
 		<string>https://github.com/teddyBearWang/ZDWater2.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>ZDWater2.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>1463E2A24B44136AFAB31C305F3F7E8A8D8817B3</key>
+		<key>785E2247FED4CBA5C63B8BCD169A9187F5FA0111</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -25,14 +25,14 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>1463E2A24B44136AFAB31C305F3F7E8A8D8817B3</string>
+	<string>785E2247FED4CBA5C63B8BCD169A9187F5FA0111</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>1463E2A24B44136AFAB31C305F3F7E8A8D8817B3</string>
+			<string>785E2247FED4CBA5C63B8BCD169A9187F5FA0111</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ZDWater3</string>
 		</dict>

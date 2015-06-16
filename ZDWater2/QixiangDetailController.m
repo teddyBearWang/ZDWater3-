@@ -24,27 +24,13 @@
 
 @implementation QixiangDetailController
 
-//- (void)viewWillAppear:(BOOL)animated
-//{
-//    [super viewWillAppear:animated];
-//    
-//    [SVProgressHUD show];
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        if ([QiXiangObject fetchWithType:self.type]) {
-//            //更新UI
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                //主线程
-//                [SVProgressHUD dismiss];
-//                datas = [QiXiangObject requestDatas];
-//                datas =  [[datas reverseObjectEnumerator] allObjects]; //所有的元素倒叙
-//                NSDictionary *dic = [datas objectAtIndex:0];
-//                [self updateUI:[dic objectForKey:@"img"]];
-//            });
-//        }else{
-//            [SVProgressHUD dismissWithError:@"加载失败"];
-//        }
-//    });
-//}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
+        [QiXiangObject cancelRequest];
+    }
+}
 
 - (void)viewDidAppear:(BOOL)animated
 {

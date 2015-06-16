@@ -20,4 +20,6 @@
 
 + (NSArray *)requestDetailData;
 
++ (void)cancelRequest;
+
 @end

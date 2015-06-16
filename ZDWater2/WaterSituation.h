@@ -21,4 +21,6 @@
 
 + (NSArray *)requestWaterData;
 
++ (void)cancelRequest;
+
 @end

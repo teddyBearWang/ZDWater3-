@@ -10,12 +10,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZDWater2/WaterQuality.m"
-            timestampString = "455624071.879433"
+            timestampString = "456125614.633003"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
             landmarkName = "+FetchWithType:withStrat:withEnd:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZDWater2/DoubleChartObject.m"
+            timestampString = "456125723.437506"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "+fetchDOubleChartDataWithType:stcd:WithDate:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

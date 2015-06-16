@@ -37,6 +37,14 @@
     [self.myTableView reloadData];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if ([self.navigationController.viewControllers indexOfObject:self]) {
+        [WaterYield cancelRequest];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -87,15 +95,6 @@ static  BOOL ret;
         }else{
             dispatch_async(dispatch_get_main_queue(), ^{
                 [SVProgressHUD dismissWithError:@"加载失败"];
-//                listData = [WaterYield requestWithDatas];
-//                if(listData.count != 0){
-//                    //当数据源不为0的时候划折线图
-//                    [self initChartView];
-//                }else{
-//                    ret = NO;
-//                    listData = [NSArray arrayWithObject:@"当前无数据"];
-//                }
-//                [self.myTableView reloadData];
             });
         }
     });

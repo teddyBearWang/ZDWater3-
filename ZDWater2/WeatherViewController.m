@@ -59,6 +59,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if ([self.navigationController.viewControllers indexOfObject:self]) {
+        [WeatherObject cancelRequest];
+    }
+}
+
 - (void)selectItemsAction:(UISegmentedControl *)seg
 {
     NSString *cityName = nil;

@@ -13,4 +13,6 @@
 + (BOOL)fetchWithArea:(NSString *)area;
 
 + (NSArray *)requestData;
+
++ (void)cancelRequest;
 @end

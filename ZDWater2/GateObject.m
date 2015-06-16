@@ -12,37 +12,17 @@
 
 @implementation GateObject
 
+static  AFHTTPRequestOperation *operation = nil;
 + (BOOL)fetchWithType:(NSString *)type
 {
     __block BOOL ret = NO;
-    /*
-    NSURL *url = [NSURL URLWithString:URL];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setPostValue:type forKey:@"t"];
-    request.timeOutSeconds = 15;
-    [request setCompletionBlock:^{
-        //成功
-        if (request.responseStatusCode == 200) {
-            ret = YES;
-            NSData *data = request.responseData;
-            NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-            datas = arr;
-        }
-    }];
-    
-    [request setFailedBlock:^{
-        //失败
-        ret = NO;
-    }];
-    
-    [request startSynchronous];
-    */
+
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     NSDictionary *parameters = @{@"t":type};
-    AFHTTPRequestOperation *operation = [manager POST:URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    operation = [manager POST:URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     } failure:nil];
     [operation waitUntilFinished];
     if (operation.responseData != nil) {
@@ -57,6 +37,13 @@ static NSArray *datas = nil;
 + (NSArray *)requestGateDatas
 {
     return datas;
+}
+
++ (void)cancelRequest
+{
+    if (operation != nil) {
+        [operation cancel];
+    }
 }
 
 @end

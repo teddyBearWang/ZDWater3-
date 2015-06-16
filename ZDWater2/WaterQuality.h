@@ -17,4 +17,6 @@
 //获取详细的数据
 + (NSArray *)RequestData;
 
++ (void)cancelRequest;
+
 @end

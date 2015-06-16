@@ -13,39 +13,16 @@
 
 @implementation QiXiangObject
 
-
+static AFHTTPRequestOperation *operation = nil;
 + (BOOL)fetchWithType:(NSString *)type
 {
-    __block BOOL ret = NO;
-    
-    /*
-    NSURL *url = [NSURL URLWithString:URL];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setPostValue:@"GetHtmlSource" forKey:@"t"];
-    [request setPostValue:type forKey:@"results"];
-    
-//    NSString *str = [NSString stringWithFormat:@"%@t=GetHtmlSource&results=%@",URL,type];
-//    NSURL *url = [NSURL URLWithString:str];
-//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setCompletionBlock:^{
-        if (request .responseStatusCode == 200) {
-            ret = YES;
-            NSData *data = request.responseData;
-            NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-            datas = arr;
-        }
-    }];
-    
-    [request setFailedBlock:^{
-        //失败
-    }];
-    [request startSynchronous];
-    */
+     BOOL ret = NO;
+
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameter = @{@"t":@"GetHtmlSource",
                                 @"results":type};
-    AFHTTPRequestOperation *operation = [manager POST:URL parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    operation = [manager POST:URL parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
     } failure:nil];
     [operation waitUntilFinished];
     if (operation.responseData != nil) {
@@ -59,6 +36,12 @@ static NSArray *datas = nil;
 + (NSArray *)requestDatas
 {
     return datas;
+}
++ (void)cancelRequest
+{
+    if (operation != nil) {
+        [operation cancel];
+    }
 }
 
 @end

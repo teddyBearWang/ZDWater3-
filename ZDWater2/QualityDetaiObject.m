@@ -14,34 +14,19 @@
 
 @implementation QualityDetaiObject
 
-
+static AFHTTPRequestOperation *operation = nil;
 + (BOOL)fetchWithType:(NSString *)type start:(NSString *)start end:(NSString *)end stcd:(NSString *)stcd
 {
     __block BOOL ret = NO;
     
-   // NSString *url_str = [NSString stringWithFormat:@"%@t=%@&results=%@$%@$%@",URL,type,start,end,stcd];
     NSString *str = [NSString stringWithFormat:@"%@$%@$%@",start,end,stcd];
-    /*
-    NSURL *url = [NSURL URLWithString:url_str];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    
-    [request setCompletionBlock:^{
-        //成功
-        if (request.responseStatusCode == 200) {
-            ret = YES;
-            NSData *data = request.responseData;
-            NSArray *jsonArr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-            _datas = jsonArr;
-        }
-    }];
-    [request startSynchronous];
-    */
+ 
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     NSDictionary *parameter = @{@"t":type,
                                 @"results":str};
-    AFHTTPRequestOperation *operation = [manager POST:URL parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    operation = [manager POST:URL parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
     } failure:nil];
     [operation waitUntilFinished];
     if (operation.responseData != nil) {
@@ -56,6 +41,13 @@ static NSArray *_datas = nil;
 + (NSArray *)requestDetailData
 {
     return _datas;
+}
+
++ (void)cancelRequest
+{
+    if (operation != nil) {
+        [operation cancel];
+    }
 }
 
 @end

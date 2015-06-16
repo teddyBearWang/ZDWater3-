@@ -39,7 +39,13 @@
     }
 }
 
-
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
+        [WaterSituation cancelRequest];
+    }
+}
 
 static BOOL ret = NO;
 - (void)viewDidLoad {
@@ -63,9 +69,6 @@ static BOOL ret = NO;
     self.navigationItem.rightBarButtonItem = item;
 
     NSDate *now = [NSDate date];
-//    NSTimeZone *zone = [NSTimeZone systemTimeZone];
-//    NSInteger interval = [zone secondsFromGMTForDate:now];
-//    NSDate *localDate = [now dateByAddingTimeInterval:interval];
     NSString *date_str = [self getStringWithDate:now];
     [self refresh:date_str];
 }

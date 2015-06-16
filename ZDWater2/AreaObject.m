@@ -12,7 +12,7 @@
 
 @implementation AreaObject
 
-
+static AFHTTPRequestOperation *operation;
 + (BOOL) fetch
 {
     __block BOOL ret = NO;
@@ -37,7 +37,7 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    AFHTTPRequestOperation *operation = [manager POST:URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject){
+    operation = [manager POST:URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject){
     } failure:nil];
     [operation waitUntilFinished];
     if (operation.responseData != nil) {
@@ -53,6 +53,13 @@ static NSArray *areas = nil;
 + (NSArray *)requestDatas
 {
     return areas;
+}
+
++ (void)cancelRequest
+{
+    if (operation != nil) {
+        [operation cancel];
+    }
 }
 
 @end

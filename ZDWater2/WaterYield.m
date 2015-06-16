@@ -7,45 +7,21 @@
 //
 
 #import "WaterYield.h"
-//#import "ASIHTTPRequest.h"
 #import <AFNetworking.h>
 
 @implementation WaterYield
 
-
+static AFHTTPRequestOperation *operation = nil;
 + (BOOL)fetchWithType:(NSString *)type date:(NSString *)date
 {
-    __block BOOL ret;
-    
-    /*
-    NSString *str = [NSString stringWithFormat:@"%@t=%@&results=%@",URL,type,date];
-    
-    NSURL *url = [NSURL URLWithString:str];
-    
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    
-    [request setCompletionBlock:^{
-        //成功
-        if (request.responseStatusCode == 200) {
-            ret = YES;
-            NSData *data = request.responseData;
-            NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-            datas = arr;
-        }
-    }];
-    
-    [request setFailedBlock:^{
-        //失败
-        ret = NO;
-    }];
-    [request startSynchronous];
-    */
+     BOOL ret;
+
     
     NSDictionary *parameters = @{@"t":type,
                                  @"results":date};
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFImageResponseSerializer serializer];
-    AFHTTPRequestOperation *operation = [manager POST:URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    operation = [manager POST:URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     } failure:nil];
     [operation waitUntilFinished];
     if (operation.responseData != nil) {
@@ -60,6 +36,13 @@ static NSArray *datas = nil;
 + (NSArray *)requestWithDatas
 {
     return datas;
+}
+
++ (void)cancelRequest
+{
+    if (operation != nil) {
+        [operation cancel];
+    }
 }
 
 @end
