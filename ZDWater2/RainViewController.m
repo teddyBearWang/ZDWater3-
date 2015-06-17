@@ -167,7 +167,7 @@
         cell.oneHour.text = [[dic objectForKey:@"Last1Hours"] isEqual:@""] ? @"--" :[dic objectForKey:@"Last1Hours"];
         
         cell.threeHour.text = [[dic objectForKey:@"Last3Hours"] isEqual:@""] ? @"--" : [dic objectForKey:@"Last3Hours"];
-        cell.today.text = [[dic objectForKey:@"Last6Hours"] isEqual:@""] ?@"--" : [dic objectForKey:@"Last6Hours"];
+        cell.today.text = [[dic objectForKey:@"Last24Hours"] isEqual:@""] ?@"--" : [dic objectForKey:@"Last24Hours"];
         return cell;
 }
 

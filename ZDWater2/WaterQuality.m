@@ -27,10 +27,12 @@ static AFHTTPRequestOperation *operation = nil;
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *parameter = @{@"t":type,
                                 @"results":str};
+    //http://115.236.2.245:38027/Data.ashx?t=GetSzInfo&results=2015-06-17$2015-06-18
     operation = [manager POST:URL parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
     } failure:nil];
     [operation waitUntilFinished];
     if (operation.responseData != 0) {
+      
         ret = YES;
         _waterData = [NSJSONSerialization JSONObjectWithData:operation.responseData options:NSJSONReadingMutableContainers error:nil];
     }

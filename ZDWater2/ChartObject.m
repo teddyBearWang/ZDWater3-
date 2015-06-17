@@ -24,47 +24,7 @@
 {
     __block BOOL ret = NO;
     
-   // date = @"2015-04-27 16:35:25"; //雨情
-    //date = @"2015-04-14"; //水位
     NSString *str = [NSString stringWithFormat:@"%@$%@",stcd,date];
-    NSURL *url = [NSURL URLWithString:URL];
-    /*
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setPostValue:type forKey:@"t"];
-    [request setPostValue:str forKey:@"results"];
-    
-    [request setCompletionBlock:^{
-        //成功
-        if (request.responseStatusCode == 200) {
-            ret = YES;
-            NSData *data = request.responseData;
-            NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-            
-            if (x_Labels == nil) {
-                x_Labels = [NSMutableArray array];
-            }else if(x_Labels.count != 0){
-                [x_Labels removeAllObjects];
-            }
-            
-            if (y_values == nil) {
-                y_values = [NSMutableArray array];
-            }else if (y_values.count != 0){
-                [y_values removeAllObjects];
-            }
-            for (int i=0; i<arr.count; i++) {
-                NSDictionary *dic = [arr objectAtIndex:i];
-                [x_Labels addObject:[dic objectForKey:@"time"]];
-                [y_values addObject:[dic objectForKey:@"value"]];
-            }
-        }
-    }];
-    
-    [request setFailedBlock:^{
-        //失败
-    }];
-    
-    [request startSynchronous];
-     */
     NSDictionary *parameters = @{@"t":type,
                                  @"results":str};
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
