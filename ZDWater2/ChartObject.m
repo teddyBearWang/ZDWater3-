@@ -24,6 +24,7 @@
 {
     __block BOOL ret = NO;
     
+    //http://101.69.249.206:82/webserzj/data.ashx?t=GetStDayYL&results=1377$2015-06-18
     NSString *str = [NSString stringWithFormat:@"%@$%@",stcd,date];
     NSDictionary *parameters = @{@"t":type,
                                  @"results":str};

@@ -15,11 +15,11 @@
 @implementation QualityDetaiObject
 
 static AFHTTPRequestOperation *operation = nil;
-+ (BOOL)fetchWithType:(NSString *)type start:(NSString *)start end:(NSString *)end stcd:(NSString *)stcd
++ (BOOL)fetchWithType:(NSString *)type start:(NSString *)start end:(NSString *)end stcd:(NSString *)stcd ascd:(NSString *)ascd
 {
     __block BOOL ret = NO;
     
-    NSString *str = [NSString stringWithFormat:@"%@$%@$%@",start,end,stcd];
+    NSString *str = [NSString stringWithFormat:@"%@$%@$%@$%@",start,end,stcd,ascd];
  
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];

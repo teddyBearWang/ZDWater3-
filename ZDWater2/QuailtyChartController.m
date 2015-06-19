@@ -1,18 +1,18 @@
 //
-//  ChartViewController.m
+//  QuailtyChartController.m
 //  ZDWater2
 //
-//  Created by teddy on 15/6/3.
+//  Created by teddy on 15/6/18.
 //  Copyright (c) 2015年 teddy. All rights reserved.
 //
 
-#import "ChartViewController.h"
+#import "QuailtyChartController.h"
 #import "UUChart.h"
-#import "ChartObject.h"
 #import "DoubleChartObject.h"
 #import "SVProgressHUD.h"
+#import "WaterQuality.h"
 
-@interface ChartViewController ()<UUChartDataSource>
+@interface QuailtyChartController ()<UUChartDataSource>
 {
     UUChart *chartView;
     NSArray *x_Labels;
@@ -23,7 +23,7 @@
 
 @end
 
-@implementation ChartViewController
+@implementation QuailtyChartController
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -41,12 +41,19 @@
     
     //保存下屏幕竖着的时候的高度
     screen_heiht = self.view.frame.size.height;
+    [self alertAction];
+    
+    [self initChartView];
+    
+}
+
+//检查警告
+- (void)alertAction
+{
     if (y_Values.count == 0 || x_Labels.count == 0) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前没有可以显示的图表数据" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alert show];
     }
-    [self initChartView];
-    
 }
 
 //创建chartVIew
@@ -60,7 +67,7 @@
     chartView = [[UUChart alloc]initwithUUChartDataFrame:CGRectMake(10, 20,
                                                                     screen_heiht, 260)
                                               withSource:self
-                                               withStyle:self.chartType == 1?UUChartLineStyle: UUChartBarStyle];
+                                               withStyle:UUChartBarStyle];
     [chartView showInView:self.view];
     
     
@@ -71,74 +78,24 @@
     // Do any additional setup after loading the view.
     
     //设置标题
-    self.title = self.title_name;
+    self.title = @"水质柱状图";
     
     UIView *dateView = [self createSelectTimeView];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:dateView];
     self.navigationItem.rightBarButtonItem = item;
     
-    NSString *date_str = [self requestDate:[NSDate date]];
-    if (self.functionType == FunctionDoubleChart) {
-        //表示折线图上多条线
-        if ([DoubleChartObject fetchDOubleChartDataWithType:self.requestType stcd:self.stcd WithDate:date_str]) {
-            x_Labels = [NSArray arrayWithArray:[DoubleChartObject requestXLables]];
-            y_Values = [NSArray arrayWithArray:(NSArray *)[DoubleChartObject requestYValues]];
-        }
-    }else{
-        //表示折线图上单条线
-        if ([ChartObject fetcChartDataWithType:self.requestType stcd:self.stcd WithDate:date_str]) {
-            x_Labels = [NSArray arrayWithArray:[ChartObject requestXLables]];
-            y_Values = [NSArray arrayWithArray:(NSArray *)[ChartObject requestYValues]];
-        }
+    NSMutableArray *xs = [NSMutableArray arrayWithCapacity:self.datas.count];
+    NSMutableArray *ys = [NSMutableArray arrayWithCapacity:self.datas.count];
+    //表示折线图上单条线
+    for (int i=0; i<self.datas.count; i++) {
+        NSDictionary *dic = [self.datas objectAtIndex:i];
+        [xs addObject:[dic objectForKey:@"CZMC"]];
+        [ys addObject:[dic objectForKey:@"ZD"]];
     }
-    
+    x_Labels = (NSArray *)xs;
+    y_Values = (NSArray *)ys;
 }
 
-/*
-//画单线
-- (void)refreshUIWithSingleChartDate:(NSString *)date
-{
-    [SVProgressHUD show];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        if ([ChartObject fetcChartDataWithType:self.requestType stcd:self.stcd WithDate:date]) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //
-                [SVProgressHUD dismiss];
-                x_Labels = [NSArray arrayWithArray:[DoubleChartObject requestXLables]];
-                y_Values = [NSArray arrayWithArray:(NSArray *)[DoubleChartObject requestYValues]];
-                
-            });
-        }else{
-          dispatch_async(dispatch_get_main_queue(), ^{
-              [SVProgressHUD dismissWithError:nil];
-          });
-        }
-    });
-}
-
-//画双线
-- (void)refreshDoubleDate:(NSString *)date
-{
-    [SVProgressHUD show];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        if ([DoubleChartObject fetchDOubleChartDataWithType:self.requestType stcd:self.stcd WithDate:date]) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //
-                [SVProgressHUD dismiss];
-                x_Labels = [NSArray arrayWithArray:[DoubleChartObject requestXLables]];
-                y_Values = [NSArray arrayWithArray:(NSArray *)[DoubleChartObject requestYValues]];
-                [self initChartView];
-
-            });
-        }else{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [SVProgressHUD dismissWithError:nil];
-            });
-        }
-    });
-}
- 
- */
 
 - (UIView *)createSelectTimeView
 {
@@ -207,22 +164,26 @@
         NSDate *next_date = [current dateByAddingTimeInterval:60*60*24];
         _showTimeLabel.text = [self requestDate:next_date];
     }
-    
-    if (self.functionType == FunctionDoubleChart) {
-        //表示折线图上多条线
-        if ([DoubleChartObject fetchDOubleChartDataWithType:self.requestType stcd:self.stcd WithDate:_showTimeLabel.text]) {
-            x_Labels = [NSArray arrayWithArray:[DoubleChartObject requestXLables]];
-            y_Values = [NSArray arrayWithArray:(NSArray *)[DoubleChartObject requestYValues]];
-        }
-    }else{
-        //表示折线图上单条线
-        if ([ChartObject fetcChartDataWithType:self.requestType stcd:self.stcd WithDate:_showTimeLabel.text]) {
-            x_Labels = [NSArray arrayWithArray:[ChartObject requestXLables]];
-            y_Values = [NSArray arrayWithArray:(NSArray *)[ChartObject requestYValues]];
-        }
-    }
-    [self initChartView];
 
+    NSDate *date = [self requestDateFromString:_showTimeLabel.text];
+    NSDate *torrom = [date dateByAddingTimeInterval:60*60*24];
+    NSString *torrom_str = [self requestDate:torrom];
+        //表示折线图上单条线
+    if ([WaterQuality FetchWithType:@"GetSzInfo" withStrat:_showTimeLabel.text withEnd:torrom_str]) {
+        NSArray *arr = [WaterQuality RequestData];
+        NSMutableArray *xValue = [NSMutableArray arrayWithCapacity:arr.count];
+        NSMutableArray *yValue = [NSMutableArray arrayWithCapacity:arr.count];
+        for (int i=0; i<arr.count; i++) {
+            NSDictionary *dic = [arr objectAtIndex:i];
+            [xValue addObject:[dic objectForKey:@"CZMC"]];
+            [yValue addObject:[dic objectForKey:@"ZD"]];
+        }
+        x_Labels = (NSArray *)xValue;
+        y_Values = (NSArray *)yValue;
+        
+        [self alertAction];
+    }
+    
 }
 
 #pragma mark - UUChartDataSource
@@ -237,12 +198,8 @@
 - (NSArray *)UUChart_yValueArray:(UUChart *)chart
 {
     @try {
-        if (self.functionType == FunctionDoubleChart) {
-            return y_Values;
-        }else{
-            //单条线
-            return @[y_Values];
-        }
+
+        return @[y_Values];
     }
     @catch (NSException *exception) {
         NSLog(@"%@",exception);

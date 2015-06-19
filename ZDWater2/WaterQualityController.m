@@ -9,12 +9,13 @@
 #import "WaterQualityController.h"
 #import "CustomHeaderView.h"
 #import "WaterQuality.h"
-#import "WaterCell.h"
+#import "RainCell.h"
 #import "QualityDetailController.h"
 #import "QualityDetaiObject.h"
 #import "CustomDateActionSheet.h"
 #import "ChartViewController.h"
 #import "SVProgressHUD.h"
+#import "QuailtyChartController.h"
 
 @interface WaterQualityController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
 {
@@ -66,14 +67,25 @@
     //异步加载网络数据
     [self getWebData:dates];
     
+    UIView *select_view = [[UIView alloc] initWithFrame:(CGRect){0,0,70,20}];
+    
     UIButton *selectTime_btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    selectTime_btn.frame = (CGRect){0,0,20,20};
+    selectTime_btn.frame = (CGRect){50,0,20,20};
     selectTime_btn.backgroundColor = [UIColor clearColor];
     selectTime_btn.titleLabel.font = [UIFont systemFontOfSize:14];
     [selectTime_btn setBackgroundImage:[UIImage imageNamed:@"select"] forState:UIControlStateNormal];
     [selectTime_btn addTarget:self action:@selector(selectTimeAction:) forControlEvents:UIControlEventTouchUpInside];
+    [select_view addSubview:selectTime_btn];
     
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:selectTime_btn];
+    UIButton *chart_btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    chart_btn.frame = (CGRect){0,0,20,20};
+    chart_btn.backgroundColor = [UIColor clearColor];
+    chart_btn.titleLabel.font = [UIFont systemFontOfSize:14];
+    [chart_btn setBackgroundImage:[UIImage imageNamed:@"chart"] forState:UIControlStateNormal];
+    [chart_btn addTarget:self action:@selector(showChartAction:) forControlEvents:UIControlEventTouchUpInside];
+    [select_view addSubview:chart_btn];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:select_view];
     self.navigationItem.rightBarButtonItem = item;
 
 }
@@ -96,9 +108,7 @@ static BOOL ret;
             dispatch_async(dispatch_get_main_queue(), ^{
                 //获取网络数据失败
                 [SVProgressHUD dismiss];
-                //listData = [WaterQuality RequestData];
                 listData = [NSArray arrayWithObject:@"当前无网络数据"];
-               // [self.myTableView reloadData];
             });
         }
     });
@@ -140,6 +150,13 @@ static BOOL ret;
     [sheet showInView:self.view];
 }
 
+- (void)showChartAction:(UIButton *)btn
+{
+    QuailtyChartController *chart = [[QuailtyChartController alloc] init];
+    chart.datas = listData;
+    [self.navigationController pushViewController:chart animated:YES];
+}
+
 #pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -162,15 +179,15 @@ static BOOL ret;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (ret) {
-        WaterCell *cell = (WaterCell *)[tableView dequeueReusableCellWithIdentifier:@"WaterCell"];
+        RainCell *cell = (RainCell *)[tableView dequeueReusableCellWithIdentifier:@"WaterCell"];
         if (cell == nil) {
-            cell = (WaterCell *)[[[NSBundle mainBundle] loadNibNamed:@"WaterCell" owner:self options:nil] lastObject];
+            cell = (RainCell *)[[[NSBundle mainBundle] loadNibNamed:@"Rain" owner:self options:nil] lastObject];
         }
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         NSDictionary *dic = [listData objectAtIndex:indexPath.row];
-        cell.stationName.text = [[dic objectForKey:@"CZMC"] isEqual:@""] ? @"--" : [dic objectForKey:@"CZMC"];
-        cell.lastestLevel.text = [[dic objectForKey:@"SZDJ"] isEqual:@""] ? @"--" : [dic objectForKey:@"SZDJ"];
-        cell.warnWater.text = [[dic objectForKey:@"WD1"] isEqual:@""] ? @"--" : [dic objectForKey:@"WD1"];
+        cell.area.text = [[dic objectForKey:@"CZMC"] isEqual:@""] ? @"--" : [dic objectForKey:@"CZMC"];
+        cell.oneHour.text = [[dic objectForKey:@"RJY"] isEqual:@""] ? @"--" : [dic objectForKey:@"RJY"];
+        cell.threeHour.text = [[dic objectForKey:@"PH"] isEqual:@""] ? @"--" : [dic objectForKey:@"PH"];
+        cell.today.text = [[dic objectForKey:@"ZD"] isEqual:@""] ? @"--" : [dic objectForKey:@"ZD"];
         return cell;
     }else{
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MyCell"];
@@ -184,9 +201,9 @@ static BOOL ret;
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    CustomHeaderView *view = [[CustomHeaderView alloc] initWithFirstLabel:@"站名" withSecond:@"水质等级" withThree:@"温度"];
-    view.backgroundColor = BG_COLOR;
-    return view;
+    UIView *headView = (UIView *)[[[NSBundle mainBundle] loadNibNamed:@"quality" owner:self options:nil] lastObject];
+    headView.backgroundColor = BG_COLOR;
+    return headView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -200,7 +217,7 @@ static BOOL ret;
     NSArray *dates =(NSArray *)[self getRequestDates:now]; //时间数组
     
     NSDictionary *dic = [listData objectAtIndex:indexPath.row];
-    BOOL ret = [QualityDetaiObject fetchWithType:@"GetSzInfoView" start:[dates objectAtIndex:0] end:[dates objectAtIndex:1] stcd:[dic objectForKey:@"CZBH"]];
+    BOOL ret = [QualityDetaiObject fetchWithType:@"GetSzInfoView" start:[dates objectAtIndex:0] end:[dates objectAtIndex:1] stcd:[dic objectForKey:@"CZBH"] ascd:[dic objectForKey:@"ASCD"]];
     if (ret) {
         QualityDetailController *quality = [[QualityDetailController alloc] init];
         //获取数据源

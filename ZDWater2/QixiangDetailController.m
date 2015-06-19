@@ -83,8 +83,8 @@
                 //主线程
                 [SVProgressHUD dismiss];
                 datas = [QiXiangObject requestDatas];
-                datas =  [[datas reverseObjectEnumerator] allObjects]; //所有的元素倒叙
-                NSDictionary *dic = [datas objectAtIndex:0];
+               // datas =  [[datas reverseObjectEnumerator] allObjects]; //所有的元素倒叙
+                NSDictionary *dic = [datas lastObject];
                 [self updateUI:[dic objectForKey:@"img"]];
                 
             //    NSTimer *timer = [NSTimer timerWithTimeInterval:2 target:self selector:@selector(updateImageViewAction:) userInfo:nil repeats:YES];

@@ -26,8 +26,6 @@
         self.clipsToBounds = YES;
         myScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(UUYLabelwidth, 0, frame.size.width-UUYLabelwidth, frame.size.height)];
         [self addSubview:myScrollView];
-        NSLog(@"self.view的宽:%lf  ---》高:%lf",self.frame.size.width,self.frame.size.height);
-         NSLog(@"myScrollView的宽:%lf  ---》高:%lf",myScrollView.frame.size.width,myScrollView.frame.size.height);
     }
     return self;
 }
@@ -100,9 +98,13 @@
         [myScrollView addSubview:label];
     }
     
+    NSLog(@"本身的高度：%lf",self.frame.size.height);
+    NSLog(@"scrollView的高度：%lf",myScrollView.frame.size.height);
     float max = (([xLabels count]-1)*_xLabelWidth + chartMargin)+_xLabelWidth;
     if (myScrollView.frame.size.width < max-10) {
         myScrollView.contentSize = CGSizeMake(max, self.frame.size.height+ 10);
+    }else{
+       myScrollView.contentSize = CGSizeMake(max, self.frame.size.height+ 10);
     }
 }
 -(void)setColors:(NSArray *)colors
@@ -133,8 +135,10 @@
             [myScrollView addSubview:bar];
             
             float y = myScrollView.frame.size.height - (UULabelHeight*4+(bar.frame.size.height * grade));
-            UUChartLabel *valueLabel = [[UUChartLabel alloc] initWithFrame:CGRectMake(bar.frame.origin.x, y, bar.frame.size.width, UULabelHeight)];
-            valueLabel.text = valueString;
+            UUChartLabel *valueLabel = [[UUChartLabel alloc] initWithFrame:CGRectMake(bar.frame.origin.x, y - 5, bar.frame.size.width+15, UULabelHeight)];
+            if ([valueString floatValue] != 0) {
+                valueLabel.text = valueString;
+            }
             if ([valueString floatValue] < 0) {
                 valueLabel.textColor = [UIColor redColor];
             }

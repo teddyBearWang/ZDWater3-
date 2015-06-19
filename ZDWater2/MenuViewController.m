@@ -54,6 +54,7 @@
     button.titleLabel.font = [UIFont systemFontOfSize:14];
     [button setTitle:@"设置" forState:UIControlStateNormal];
     [button addTarget:self action:@selector(SettingAction:) forControlEvents:UIControlEventTouchDragInside];
+    button.hidden = YES;
     
     UIBarButtonItem *setItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.rightBarButtonItem = setItem;

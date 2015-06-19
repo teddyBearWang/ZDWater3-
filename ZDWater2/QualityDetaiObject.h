@@ -16,7 +16,7 @@
  * end: 结束时间
  * stcd: 测站编号s
  */
-+ (BOOL)fetchWithType:(NSString *)type start:(NSString *)start end:(NSString *)end stcd:(NSString *)stcd;
++ (BOOL)fetchWithType:(NSString *)type start:(NSString *)start end:(NSString *)end stcd:(NSString *)stcd ascd:(NSString *)ascd;
 
 + (NSArray *)requestDetailData;
 

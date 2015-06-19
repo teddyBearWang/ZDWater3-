@@ -19,10 +19,11 @@ static AFHTTPRequestOperation *operation = nil;
      BOOL ret = NO;
 
     
+    //http://101.69.249.206:82/webserzj/data.ashx?t=GetHtmlSource&results=wxyt$
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameter = @{@"t":@"GetHtmlSource",
                                 @"results":type};
-    operation = [manager POST:URL parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    operation = [manager POST:Weather_url parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
     } failure:nil];
     [operation waitUntilFinished];
     if (operation.responseData != nil) {

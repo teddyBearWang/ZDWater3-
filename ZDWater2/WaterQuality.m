@@ -9,7 +9,7 @@
 #import "WaterQuality.h"
 #import <AFNetworking.h>
 
-//#define URL @"http://115.236.2.245:38027/Data.ashx?t=GetSzInfo&results=2015-04-25$2015-04-26"
+//#define URL @"http://101.69.249.206:82/webserzj/data.ashxt=GetSzInfo&results=2015-04-25$2015-04-26"
 
 static AFHTTPRequestOperation *operation = nil;
 @implementation WaterQuality

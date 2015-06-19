@@ -88,6 +88,9 @@
 		9F3FE8E91B219B8D00CC49F4 /* sunTocloudy.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F3FE8DF1B219B8D00CC49F4 /* sunTocloudy.png */; };
 		9F3FE8ED1B219C3300CC49F4 /* WeatherObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3FE8EC1B219C3300CC49F4 /* WeatherObject.m */; };
 		9F3FE8EF1B219D2400CC49F4 /* tq.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9F3FE8EE1B219D2400CC49F4 /* tq.jpg */; };
+		9F41C11D1B3263EE003E0679 /* QuailtyChartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F41C11C1B3263EE003E0679 /* QuailtyChartController.m */; };
+		9F41C1211B32722F003E0679 /* chart.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F41C1201B32722F003E0679 /* chart.png */; };
+		9F41C1231B327379003E0679 /* quality.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F41C1221B327379003E0679 /* quality.xib */; };
 		9F9158FD1B25415300CFA0DB /* qixiang.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F9158FC1B25415300CFA0DB /* qixiang.png */; };
 		9F9159001B2541C800CFA0DB /* QiXiangController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9158FF1B2541C800CFA0DB /* QiXiangController.m */; };
 		9F9159041B25444600CFA0DB /* QixiangDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9159031B25444600CFA0DB /* QixiangDetailController.m */; };
@@ -232,6 +235,10 @@
 		9F3FE8EB1B219C3300CC49F4 /* WeatherObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherObject.h; sourceTree = "<group>"; };
 		9F3FE8EC1B219C3300CC49F4 /* WeatherObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherObject.m; sourceTree = "<group>"; };
 		9F3FE8EE1B219D2400CC49F4 /* tq.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tq.jpg; sourceTree = "<group>"; };
+		9F41C11B1B3263EE003E0679 /* QuailtyChartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuailtyChartController.h; sourceTree = "<group>"; };
+		9F41C11C1B3263EE003E0679 /* QuailtyChartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuailtyChartController.m; sourceTree = "<group>"; };
+		9F41C1201B32722F003E0679 /* chart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chart.png; sourceTree = "<group>"; };
+		9F41C1221B327379003E0679 /* quality.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = quality.xib; sourceTree = "<group>"; };
 		9F9158FC1B25415300CFA0DB /* qixiang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qixiang.png; sourceTree = "<group>"; };
 		9F9158FE1B2541C800CFA0DB /* QiXiangController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QiXiangController.h; sourceTree = "<group>"; };
 		9F9158FF1B2541C800CFA0DB /* QiXiangController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QiXiangController.m; sourceTree = "<group>"; };
@@ -352,6 +359,7 @@
 			isa = PBXGroup;
 			children = (
 				9F9158FC1B25415300CFA0DB /* qixiang.png */,
+				9F41C1201B32722F003E0679 /* chart.png */,
 				9F3FE8D71B219B8D00CC49F4 /* cloudy.png */,
 				9F3FE8D81B219B8D00CC49F4 /* foggy.png */,
 				9F3FE8D91B219B8D00CC49F4 /* rainy.png */,
@@ -415,6 +423,7 @@
 				9F3852381B1E9CB0005E3B8B /* CustomHeaderView.xib */,
 				9F3852391B1E9CB0005E3B8B /* RainHeaderView.xib */,
 				9F3852BC1B1EA29C005E3B8B /* Rain.xib */,
+				9F41C1221B327379003E0679 /* quality.xib */,
 			);
 			name = xib;
 			sourceTree = "<group>";
@@ -523,6 +532,8 @@
 				9F3852291B1E973F005E3B8B /* WaterQualityController.m */,
 				9F3852C41B1EA93B005E3B8B /* QualityDetailController.h */,
 				9F3852C51B1EA93B005E3B8B /* QualityDetailController.m */,
+				9F41C11B1B3263EE003E0679 /* QuailtyChartController.h */,
+				9F41C11C1B3263EE003E0679 /* QuailtyChartController.m */,
 			);
 			name = waterQuality;
 			sourceTree = "<group>";
@@ -657,7 +668,9 @@
 				9F3FE8E41B219B8D00CC49F4 /* shady.png in Resources */,
 				9F3852461B1E9D30005E3B8B /* btn_020@2x.png in Resources */,
 				9F38523A1B1E9CB0005E3B8B /* CustomHeaderView.xib in Resources */,
+				9F41C1211B32722F003E0679 /* chart.png in Resources */,
 				9F3852191B1E9304005E3B8B /* setting.png in Resources */,
+				9F41C1231B327379003E0679 /* quality.xib in Resources */,
 				9F38521C1B1E9304005E3B8B /* waterQuality.png in Resources */,
 				9F3852BD1B1EA29C005E3B8B /* Rain.xib in Resources */,
 				9F38526A1B1E9E60005E3B8B /* CustomDateActionSheet.xib in Resources */,
@@ -750,6 +763,7 @@
 				9F3852C61B1EA93B005E3B8B /* QualityDetailController.m in Sources */,
 				9F3852AC1B1EA077005E3B8B /* GateObject.m in Sources */,
 				9F3852201B1E9368005E3B8B /* UIView+RootView.m in Sources */,
+				9F41C11D1B3263EE003E0679 /* QuailtyChartController.m in Sources */,
 				9F3852601B1E9E20005E3B8B /* UUChart.m in Sources */,
 				9F38522A1B1E973F005E3B8B /* WaterQualityController.m in Sources */,
 				9F3852AB1B1EA077005E3B8B /* DoubleChartObject.m in Sources */,

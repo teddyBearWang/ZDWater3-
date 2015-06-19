@@ -148,10 +148,10 @@ static  BOOL ret;
     [chartView showInView:chart_bg_view];
     chart_bg_view.hidden = YES;
     
-    UILabel *explanLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, chart_bg_view.frame.size.height - 30, chart_bg_view.frame.size.width, 20)];
+    UILabel *explanLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, chart_bg_view.frame.size.height - 20, chart_bg_view.frame.size.width, 20)];
     explanLabel.layer.borderWidth = 1.0;
     explanLabel.layer.borderColor = [UIColor blackColor].CGColor;
-    explanLabel.text = @"红色:表示计划水量；绿色:表示实际水量";
+    explanLabel.text = @"  红色:表示计划水量；绿色:表示实际水量";
     explanLabel.font = [UIFont systemFontOfSize:14];
     [chart_bg_view addSubview:explanLabel];
 }
