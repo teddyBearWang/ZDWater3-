@@ -7,18 +7,35 @@
 //
 
 #import "ContactViewController.h"
+#import "ContactCell.h"
 
-@interface ContactViewController ()
+@interface ContactViewController ()<UITableViewDataSource,UITableViewDelegate>
+{
+    NSArray *contactList; //列表
+}
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 
 @end
 
 @implementation ContactViewController
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
+        //取消请求
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"联系人";
+    
+    self.myTableView.delegate = self;
+    self.myTableView.dataSource = self;
+    self.myTableView.rowHeight = 50;
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -26,14 +43,27 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - UITableVIewDataSource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return contactList.count;
 }
-*/
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *identifier = @"contactCell";
+    
+    ContactCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (cell == nil) {
+        cell = (ContactCell *)[[[NSBundle mainBundle] loadNibNamed:@"ContactCell" owner:nil options:nil] lastObject];
+    }
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
 @end

@@ -10,7 +10,6 @@
 
 @interface NotificationCell : UITableViewCell
 
-@property (nonatomic, strong) IBOutlet UIImageView *image; //图片
 @property (nonatomic, strong) IBOutlet UILabel *name; //名字
 @property (nonatomic, strong) IBOutlet UILabel *detail; //详细
 @property (nonatomic, strong) IBOutlet UILabel *date; //时间

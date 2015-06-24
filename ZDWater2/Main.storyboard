@@ -36,12 +36,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="NNs-Mv-teq">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="NNs-Mv-teq">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="NNs-Mv-teq" firstAttribute="leading" secondItem="4Tn-AO-Ybx" secondAttribute="leading" id="DgW-gb-lNz"/>
+                            <constraint firstAttribute="bottom" secondItem="NNs-Mv-teq" secondAttribute="bottom" id="K2D-8d-fcK"/>
+                            <constraint firstItem="NNs-Mv-teq" firstAttribute="top" secondItem="4Tn-AO-Ybx" secondAttribute="top" id="MCw-wr-E4o"/>
+                            <constraint firstAttribute="trailing" secondItem="NNs-Mv-teq" secondAttribute="trailing" id="b5Q-7R-ZhS"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="q0p-c8-Q7z"/>
                     <connections>
@@ -193,12 +199,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="K0N-K3-vVQ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="K0N-K3-vVQ">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="K0N-K3-vVQ" firstAttribute="top" secondItem="x0L-qx-Yoj" secondAttribute="top" id="41R-Xi-VM9"/>
+                            <constraint firstItem="K0N-K3-vVQ" firstAttribute="leading" secondItem="x0L-qx-Yoj" secondAttribute="leading" id="DO1-d1-WA3"/>
+                            <constraint firstAttribute="bottom" secondItem="K0N-K3-vVQ" secondAttribute="bottom" id="Znf-XS-3oP"/>
+                            <constraint firstAttribute="trailing" secondItem="K0N-K3-vVQ" secondAttribute="trailing" id="uFY-bq-7i8"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="LQI-T0-lLj"/>
                     <connections>

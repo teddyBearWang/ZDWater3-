@@ -31,7 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.title = @"区域选择";
     BOOL ret = [AreaObject fetch];
     if (ret) {
         dataSource = [AreaObject requestDatas];
