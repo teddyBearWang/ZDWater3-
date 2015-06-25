@@ -101,6 +101,32 @@
 		9F9159001B2541C800CFA0DB /* QiXiangController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9158FF1B2541C800CFA0DB /* QiXiangController.m */; };
 		9F9159041B25444600CFA0DB /* QixiangDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9159031B25444600CFA0DB /* QixiangDetailController.m */; };
 		9F9159071B25581600CFA0DB /* QiXiangObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9159061B25581600CFA0DB /* QiXiangObject.m */; };
+		9FAA18361B3BEA66009EDA7E /* password@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA18341B3BEA66009EDA7E /* password@2x.png */; };
+		9FAA18371B3BEA66009EDA7E /* user@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA18351B3BEA66009EDA7E /* user@2x.png */; };
+		9FAA183A1B3BEA6C009EDA7E /* password.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA18381B3BEA6C009EDA7E /* password.png */; };
+		9FAA183B1B3BEA6C009EDA7E /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA18391B3BEA6C009EDA7E /* user.png */; };
+		9FAA183F1B3BEAC9009EDA7E /* password@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA183D1B3BEAC9009EDA7E /* password@3x.png */; };
+		9FAA18401B3BEAC9009EDA7E /* user@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA183E1B3BEAC9009EDA7E /* user@3x.png */; };
+		9FAA184D1B3BECD5009EDA7E /* contact@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA18431B3BECD5009EDA7E /* contact@3x.png */; };
+		9FAA184E1B3BECD5009EDA7E /* gate@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA18441B3BECD5009EDA7E /* gate@3x.png */; };
+		9FAA184F1B3BECD5009EDA7E /* notification@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA18451B3BECD5009EDA7E /* notification@3x.png */; };
+		9FAA18501B3BECD5009EDA7E /* qixiang@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA18461B3BECD5009EDA7E /* qixiang@3x.png */; };
+		9FAA18511B3BECD5009EDA7E /* rain@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA18471B3BECD5009EDA7E /* rain@3x.png */; };
+		9FAA18521B3BECD5009EDA7E /* setting@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA18481B3BECD5009EDA7E /* setting@3x.png */; };
+		9FAA18531B3BECD5009EDA7E /* water@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA18491B3BECD5009EDA7E /* water@3x.png */; };
+		9FAA18541B3BECD5009EDA7E /* waterlevel@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA184A1B3BECD5009EDA7E /* waterlevel@3x.png */; };
+		9FAA18551B3BECD5009EDA7E /* waterQuality@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA184B1B3BECD5009EDA7E /* waterQuality@3x.png */; };
+		9FAA18561B3BECD5009EDA7E /* weather@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA184C1B3BECD5009EDA7E /* weather@3x.png */; };
+		9FAA18611B3BED9E009EDA7E /* contact@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA18571B3BED9E009EDA7E /* contact@2x.png */; };
+		9FAA18621B3BED9E009EDA7E /* gate@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA18581B3BED9E009EDA7E /* gate@2x.png */; };
+		9FAA18631B3BED9E009EDA7E /* notification@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA18591B3BED9E009EDA7E /* notification@2x.png */; };
+		9FAA18641B3BED9E009EDA7E /* qixiang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA185A1B3BED9E009EDA7E /* qixiang@2x.png */; };
+		9FAA18651B3BED9E009EDA7E /* rain@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA185B1B3BED9E009EDA7E /* rain@2x.png */; };
+		9FAA18661B3BED9E009EDA7E /* setting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA185C1B3BED9E009EDA7E /* setting@2x.png */; };
+		9FAA18671B3BED9E009EDA7E /* water@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA185D1B3BED9E009EDA7E /* water@2x.png */; };
+		9FAA18681B3BED9E009EDA7E /* waterlevel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA185E1B3BED9E009EDA7E /* waterlevel@2x.png */; };
+		9FAA18691B3BED9E009EDA7E /* waterQuality@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA185F1B3BED9E009EDA7E /* waterQuality@2x.png */; };
+		9FAA186A1B3BED9E009EDA7E /* weather@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA18601B3BED9E009EDA7E /* weather@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -261,6 +287,32 @@
 		9F9159031B25444600CFA0DB /* QixiangDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QixiangDetailController.m; sourceTree = "<group>"; };
 		9F9159051B25581600CFA0DB /* QiXiangObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QiXiangObject.h; sourceTree = "<group>"; };
 		9F9159061B25581600CFA0DB /* QiXiangObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QiXiangObject.m; sourceTree = "<group>"; };
+		9FAA18341B3BEA66009EDA7E /* password@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "password@2x.png"; sourceTree = "<group>"; };
+		9FAA18351B3BEA66009EDA7E /* user@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user@2x.png"; sourceTree = "<group>"; };
+		9FAA18381B3BEA6C009EDA7E /* password.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = password.png; sourceTree = "<group>"; };
+		9FAA18391B3BEA6C009EDA7E /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user.png; sourceTree = "<group>"; };
+		9FAA183D1B3BEAC9009EDA7E /* password@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "password@3x.png"; sourceTree = "<group>"; };
+		9FAA183E1B3BEAC9009EDA7E /* user@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user@3x.png"; sourceTree = "<group>"; };
+		9FAA18431B3BECD5009EDA7E /* contact@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact@3x.png"; sourceTree = "<group>"; };
+		9FAA18441B3BECD5009EDA7E /* gate@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gate@3x.png"; sourceTree = "<group>"; };
+		9FAA18451B3BECD5009EDA7E /* notification@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notification@3x.png"; sourceTree = "<group>"; };
+		9FAA18461B3BECD5009EDA7E /* qixiang@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qixiang@3x.png"; sourceTree = "<group>"; };
+		9FAA18471B3BECD5009EDA7E /* rain@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rain@3x.png"; sourceTree = "<group>"; };
+		9FAA18481B3BECD5009EDA7E /* setting@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting@3x.png"; sourceTree = "<group>"; };
+		9FAA18491B3BECD5009EDA7E /* water@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "water@3x.png"; sourceTree = "<group>"; };
+		9FAA184A1B3BECD5009EDA7E /* waterlevel@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "waterlevel@3x.png"; sourceTree = "<group>"; };
+		9FAA184B1B3BECD5009EDA7E /* waterQuality@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "waterQuality@3x.png"; sourceTree = "<group>"; };
+		9FAA184C1B3BECD5009EDA7E /* weather@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weather@3x.png"; sourceTree = "<group>"; };
+		9FAA18571B3BED9E009EDA7E /* contact@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact@2x.png"; sourceTree = "<group>"; };
+		9FAA18581B3BED9E009EDA7E /* gate@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gate@2x.png"; sourceTree = "<group>"; };
+		9FAA18591B3BED9E009EDA7E /* notification@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notification@2x.png"; sourceTree = "<group>"; };
+		9FAA185A1B3BED9E009EDA7E /* qixiang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qixiang@2x.png"; sourceTree = "<group>"; };
+		9FAA185B1B3BED9E009EDA7E /* rain@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rain@2x.png"; sourceTree = "<group>"; };
+		9FAA185C1B3BED9E009EDA7E /* setting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting@2x.png"; sourceTree = "<group>"; };
+		9FAA185D1B3BED9E009EDA7E /* water@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "water@2x.png"; sourceTree = "<group>"; };
+		9FAA185E1B3BED9E009EDA7E /* waterlevel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "waterlevel@2x.png"; sourceTree = "<group>"; };
+		9FAA185F1B3BED9E009EDA7E /* waterQuality@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "waterQuality@2x.png"; sourceTree = "<group>"; };
+		9FAA18601B3BED9E009EDA7E /* weather@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weather@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -366,6 +418,8 @@
 		9F3851D31B1E8A14005E3B8B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9FAA183C1B3BEA94009EDA7E /* image@3x */,
+				9FAA18331B3BEA57009EDA7E /* image@2x */,
 				9F3852071B1E92A6005E3B8B /* images */,
 				9F3851D41B1E8A14005E3B8B /* Info.plist */,
 				9F3851D51B1E8A14005E3B8B /* main.m */,
@@ -394,6 +448,8 @@
 		9F3852071B1E92A6005E3B8B /* images */ = {
 			isa = PBXGroup;
 			children = (
+				9FAA18381B3BEA6C009EDA7E /* password.png */,
+				9FAA18391B3BEA6C009EDA7E /* user.png */,
 				9F9158FC1B25415300CFA0DB /* qixiang.png */,
 				9F41C1201B32722F003E0679 /* chart.png */,
 				9F3FE8D71B219B8D00CC49F4 /* cloudy.png */,
@@ -599,6 +655,44 @@
 			name = QixiangGuotu;
 			sourceTree = "<group>";
 		};
+		9FAA18331B3BEA57009EDA7E /* image@2x */ = {
+			isa = PBXGroup;
+			children = (
+				9FAA18571B3BED9E009EDA7E /* contact@2x.png */,
+				9FAA18581B3BED9E009EDA7E /* gate@2x.png */,
+				9FAA18591B3BED9E009EDA7E /* notification@2x.png */,
+				9FAA185A1B3BED9E009EDA7E /* qixiang@2x.png */,
+				9FAA185B1B3BED9E009EDA7E /* rain@2x.png */,
+				9FAA185C1B3BED9E009EDA7E /* setting@2x.png */,
+				9FAA185D1B3BED9E009EDA7E /* water@2x.png */,
+				9FAA185E1B3BED9E009EDA7E /* waterlevel@2x.png */,
+				9FAA185F1B3BED9E009EDA7E /* waterQuality@2x.png */,
+				9FAA18601B3BED9E009EDA7E /* weather@2x.png */,
+				9FAA18341B3BEA66009EDA7E /* password@2x.png */,
+				9FAA18351B3BEA66009EDA7E /* user@2x.png */,
+			);
+			name = "image@2x";
+			sourceTree = "<group>";
+		};
+		9FAA183C1B3BEA94009EDA7E /* image@3x */ = {
+			isa = PBXGroup;
+			children = (
+				9FAA18431B3BECD5009EDA7E /* contact@3x.png */,
+				9FAA18441B3BECD5009EDA7E /* gate@3x.png */,
+				9FAA18451B3BECD5009EDA7E /* notification@3x.png */,
+				9FAA18461B3BECD5009EDA7E /* qixiang@3x.png */,
+				9FAA18471B3BECD5009EDA7E /* rain@3x.png */,
+				9FAA18481B3BECD5009EDA7E /* setting@3x.png */,
+				9FAA18491B3BECD5009EDA7E /* water@3x.png */,
+				9FAA184A1B3BECD5009EDA7E /* waterlevel@3x.png */,
+				9FAA184B1B3BECD5009EDA7E /* waterQuality@3x.png */,
+				9FAA184C1B3BECD5009EDA7E /* weather@3x.png */,
+				9FAA183D1B3BEAC9009EDA7E /* password@3x.png */,
+				9FAA183E1B3BEAC9009EDA7E /* user@3x.png */,
+			);
+			name = "image@3x";
+			sourceTree = "<group>";
+		};
 		B2941C2B132DCDCDEB8BA2C7 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -690,46 +784,72 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FAA18361B3BEA66009EDA7E /* password@2x.png in Resources */,
+				9FAA186A1B3BED9E009EDA7E /* weather@2x.png in Resources */,
+				9FAA18531B3BECD5009EDA7E /* water@3x.png in Resources */,
 				9F3FE8D41B21965800CC49F4 /* filter.png in Resources */,
 				9F3FE8E31B219B8D00CC49F4 /* rainy.png in Resources */,
 				9F282D651B3A880700D8FBD5 /* Notification.xib in Resources */,
+				9FAA18401B3BEAC9009EDA7E /* user@3x.png in Resources */,
 				9F3852171B1E9304005E3B8B /* notification.png in Resources */,
 				9F38523D1B1E9CD7005E3B8B /* WaterCell.xib in Resources */,
 				9F3851E11B1E8A14005E3B8B /* Images.xcassets in Resources */,
+				9FAA184D1B3BECD5009EDA7E /* contact@3x.png in Resources */,
 				9F3852151B1E9304005E3B8B /* contact.png in Resources */,
+				9FAA184E1B3BECD5009EDA7E /* gate@3x.png in Resources */,
 				9F3852161B1E9304005E3B8B /* gate.png in Resources */,
 				9F3FE8E51B219B8D00CC49F4 /* showers.png in Resources */,
 				9F3FE8E71B219B8D00CC49F4 /* sun.png in Resources */,
 				9F38523B1B1E9CB0005E3B8B /* RainHeaderView.xib in Resources */,
 				9F3852C21B1EA7AC005E3B8B /* right.png in Resources */,
 				9F3852C11B1EA7AC005E3B8B /* left.png in Resources */,
+				9FAA183B1B3BEA6C009EDA7E /* user.png in Resources */,
 				9F3852141B1E9304005E3B8B /* btn_021@2x.png in Resources */,
+				9FAA18641B3BED9E009EDA7E /* qixiang@2x.png in Resources */,
 				9F3FE8E21B219B8D00CC49F4 /* foggy.png in Resources */,
+				9FAA18511B3BECD5009EDA7E /* rain@3x.png in Resources */,
+				9FAA18661B3BED9E009EDA7E /* setting@2x.png in Resources */,
 				9F38521B1B1E9304005E3B8B /* waterlevel.png in Resources */,
+				9FAA184F1B3BECD5009EDA7E /* notification@3x.png in Resources */,
 				9F3FE8E41B219B8D00CC49F4 /* shady.png in Resources */,
+				9FAA18651B3BED9E009EDA7E /* rain@2x.png in Resources */,
 				9F3852461B1E9D30005E3B8B /* btn_020@2x.png in Resources */,
 				9F38523A1B1E9CB0005E3B8B /* CustomHeaderView.xib in Resources */,
+				9FAA18551B3BECD5009EDA7E /* waterQuality@3x.png in Resources */,
+				9FAA18611B3BED9E009EDA7E /* contact@2x.png in Resources */,
+				9FAA18521B3BECD5009EDA7E /* setting@3x.png in Resources */,
+				9FAA18541B3BECD5009EDA7E /* waterlevel@3x.png in Resources */,
+				9FAA18691B3BED9E009EDA7E /* waterQuality@2x.png in Resources */,
 				9F41C1211B32722F003E0679 /* chart.png in Resources */,
 				9F3852191B1E9304005E3B8B /* setting.png in Resources */,
 				9F41C1231B327379003E0679 /* quality.xib in Resources */,
 				9F38521C1B1E9304005E3B8B /* waterQuality.png in Resources */,
 				9F3852BD1B1EA29C005E3B8B /* Rain.xib in Resources */,
 				9F38526A1B1E9E60005E3B8B /* CustomDateActionSheet.xib in Resources */,
+				9FAA18561B3BECD5009EDA7E /* weather@3x.png in Resources */,
+				9FAA18681B3BED9E009EDA7E /* waterlevel@2x.png in Resources */,
 				9F3852181B1E9304005E3B8B /* rain.png in Resources */,
 				9F3FE8E61B219B8D00CC49F4 /* snowy.png in Resources */,
+				9FAA18671B3BED9E009EDA7E /* water@2x.png in Resources */,
 				9F3FE8E11B219B8D00CC49F4 /* cloudy.png in Resources */,
 				9F282D711B3AA07400D8FBD5 /* ContactCell.xib in Resources */,
+				9FAA18501B3BECD5009EDA7E /* qixiang@3x.png in Resources */,
 				9F3FE8E81B219B8D00CC49F4 /* sunny.png in Resources */,
 				9F3852131B1E9304005E3B8B /* bg_023@2x.png in Resources */,
 				9F3852001B1E8B05005E3B8B /* Main.storyboard in Resources */,
 				9F38521D1B1E9304005E3B8B /* weather.png in Resources */,
 				9F3FE8D61B21965D00CC49F4 /* select.png in Resources */,
 				9F9158FD1B25415300CFA0DB /* qixiang.png in Resources */,
+				9FAA18621B3BED9E009EDA7E /* gate@2x.png in Resources */,
 				9F38521A1B1E9304005E3B8B /* water.png in Resources */,
 				9F3852CB1B1ED662005E3B8B /* SVProgressHUD.bundle in Resources */,
+				9FAA183A1B3BEA6C009EDA7E /* password.png in Resources */,
 				9F3FE8EF1B219D2400CC49F4 /* tq.jpg in Resources */,
+				9FAA18371B3BEA66009EDA7E /* user@2x.png in Resources */,
+				9FAA183F1B3BEAC9009EDA7E /* password@3x.png in Resources */,
 				9F282D6B1B3A8DEE00D8FBD5 /* NotificationDetailController.xib in Resources */,
 				9F3FE8E91B219B8D00CC49F4 /* sunTocloudy.png in Resources */,
+				9FAA18631B3BED9E009EDA7E /* notification@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

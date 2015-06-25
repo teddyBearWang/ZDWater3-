@@ -15,6 +15,11 @@
 - (IBAction)loginAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *username;
 @property (weak, nonatomic) IBOutlet UITextField *pswField;
+@property (weak, nonatomic) IBOutlet UIButton *login_btn;
+@property (weak, nonatomic) IBOutlet UIView *use_bg_view;
+@property (weak, nonatomic) IBOutlet UIView *psw_bg_view;
+@property (weak, nonatomic) IBOutlet UIImageView *user_image;
+@property (weak, nonatomic) IBOutlet UIImageView *psw_image;
 
 - (IBAction)tapbackground:(id)sender;
 
@@ -27,7 +32,20 @@
     // Do any additional setup after loading the view.
     self.title = @"登陆";
     self.view.backgroundColor = BG_COLOR;
+    self.login_btn.layer.cornerRadius = 5.0;
+    self.login_btn.backgroundColor = [UIColor colorWithRed:56/255.0 green:131/255.0 blue:238/255.0 alpha:1.0];
     
+
+    self.use_bg_view.layer.cornerRadius = 5.0f;
+    self.use_bg_view.layer.masksToBounds = YES;
+    self.user_image.image = [UIImage imageNamed:@"user"];
+    [self.username setValue:[UIColor lightGrayColor] forKeyPath:@"_placeholderLabel.textColor"];
+    
+    self.psw_bg_view.layer.cornerRadius = 5.0;
+    self.psw_bg_view.layer.masksToBounds = YES;
+    self.psw_image.image = [UIImage imageNamed:@"password"];
+     //设置placeholder的字体颜色
+    [self.pswField setValue:[UIColor lightGrayColor] forKeyPath:@"_placeholderLabel.textColor"];
     self.pswField.secureTextEntry = YES;
     
     
