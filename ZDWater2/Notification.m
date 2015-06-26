@@ -17,7 +17,7 @@ static AFHTTPRequestOperation *operation = nil;
     BOOL ret = NO;
     
     
-    //http://101.69.249.206:82/webserzj/data.ashx?t=GetHtmlSource&results=wxyt$
+    //http://101.69.249.206:82/webserzj/data.ashx?t=GetNewsList
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameter = @{@"t":@"GetNewsList"};
     operation = [manager POST:URL parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {

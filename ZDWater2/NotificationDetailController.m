@@ -8,7 +8,7 @@
 
 #import "NotificationDetailController.h"
 
-@interface NotificationDetailController ()
+@interface NotificationDetailController ()<UITextViewDelegate>
 
 @end
 
@@ -41,12 +41,21 @@
     title_label.font = [UIFont systemFontOfSize:14];
     [lable_view addSubview:title_label];
     
-    UITextView *detail_text = [[UITextView alloc] initWithFrame:(CGRect){0,lable_view.frame.size.height,self.view.frame.size.width,self.view.frame.size.height - lable_view.frame.size.height}];
-    detail_text.userInteractionEnabled = NO;
+    UITextView *detail_text = [[UITextView alloc] initWithFrame:(CGRect){5,lable_view.frame.size.height,[UIScreen mainScreen].bounds.size.width - 10,[UIScreen mainScreen].bounds.size.height - lable_view.frame.size.height-64}];
+    detail_text.backgroundColor = BG_COLOR;
+    detail_text.showsVerticalScrollIndicator = YES;
     detail_text.scrollEnabled = YES;
     detail_text.text = self.conetnt;
     [self.view addSubview:detail_text];
     
+    //获取内容高度
+    CGSize size = [detail_text.text sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 10, 9999999.0f) lineBreakMode:NSLineBreakByClipping];
+    [detail_text setContentSize:size];
+    if (detail_text.contentSize.height >= detail_text.frame.size.height) {
+        detail_text.userInteractionEnabled = YES;
+
+    }
 }
+
 
 @end
