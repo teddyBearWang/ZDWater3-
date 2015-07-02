@@ -160,7 +160,6 @@ static int count = 0;
  */
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
-    NSLog(@"开始缩放");
     return image_view;
 }
 
@@ -172,7 +171,6 @@ static int count = 0;
  */
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView
 {
-    NSLog(@"正在缩放");
 }
 
 
@@ -186,7 +184,6 @@ static int count = 0;
  */
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale
 {
-    NSLog(@"缩放结束");
 }
 
 @end

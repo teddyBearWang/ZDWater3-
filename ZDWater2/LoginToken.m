@@ -11,7 +11,7 @@
 
 @implementation LoginToken
 
-//http://115.236.2.245:38027/Data.ashx?t=CheckUser&results=AA$AAA$1.0.1
+//http://101.69.249.206:82/webserzj/data.ashx?t=CheckUser&results=test$123$1.0.1
 
 +(BOOL)fetchWithUser:(NSString *)user andPSW:(NSString *)psw withVersion:(NSString *)version
 {

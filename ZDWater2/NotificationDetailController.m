@@ -41,7 +41,8 @@
     title_label.font = [UIFont systemFontOfSize:14];
     [lable_view addSubview:title_label];
     
-    UITextView *detail_text = [[UITextView alloc] initWithFrame:(CGRect){5,lable_view.frame.size.height,[UIScreen mainScreen].bounds.size.width - 10,[UIScreen mainScreen].bounds.size.height - lable_view.frame.size.height-64}];
+    UITextView *detail_text = [[UITextView alloc] initWithFrame:(CGRect){0,lable_view.frame.size.height,[UIScreen mainScreen].bounds.size.width,[UIScreen mainScreen].bounds.size.height - lable_view.frame.size.height-64}];
+    detail_text.editable = NO;//不可以被编辑
     detail_text.backgroundColor = BG_COLOR;
     detail_text.showsVerticalScrollIndicator = YES;
     detail_text.scrollEnabled = YES;

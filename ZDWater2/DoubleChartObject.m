@@ -81,7 +81,6 @@
     } failure:nil];
     [operation waitUntilFinished];
     if (operation.responseData != nil) {
-        NSLog(@"获取到得数据：%@",operation.responseString);
         ret = YES;
         NSArray *arr = [NSJSONSerialization JSONObjectWithData:operation.responseData options:NSJSONReadingMutableContainers error:nil];
         

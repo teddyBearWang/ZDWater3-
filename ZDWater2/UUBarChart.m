@@ -98,8 +98,6 @@
         [myScrollView addSubview:label];
     }
     
-    NSLog(@"本身的高度：%lf",self.frame.size.height);
-    NSLog(@"scrollView的高度：%lf",myScrollView.frame.size.height);
     float max = (([xLabels count]-1)*_xLabelWidth + chartMargin)+_xLabelWidth;
     if (myScrollView.frame.size.width < max-10) {
         myScrollView.contentSize = CGSizeMake(max, self.frame.size.height+ 10);

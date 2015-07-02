@@ -80,6 +80,7 @@
 		9F3852C61B1EA93B005E3B8B /* QualityDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3852C51B1EA93B005E3B8B /* QualityDetailController.m */; };
 		9F3852CB1B1ED662005E3B8B /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9F3852C81B1ED662005E3B8B /* SVProgressHUD.bundle */; };
 		9F3852CC1B1ED662005E3B8B /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3852CA1B1ED662005E3B8B /* SVProgressHUD.m */; };
+		9F39C7B11B44E1AA0067869B /* ContactObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F39C7B01B44E1AA0067869B /* ContactObject.m */; };
 		9F3A71C51B299C790032677E /* LoginToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3A71C41B299C790032677E /* LoginToken.m */; };
 		9F3FE8D41B21965800CC49F4 /* filter.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F3FE8D31B21965700CC49F4 /* filter.png */; };
 		9F3FE8D61B21965D00CC49F4 /* select.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F3FE8D51B21965D00CC49F4 /* select.png */; };
@@ -260,6 +261,8 @@
 		9F3852C81B1ED662005E3B8B /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		9F3852C91B1ED662005E3B8B /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		9F3852CA1B1ED662005E3B8B /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		9F39C7AF1B44E1AA0067869B /* ContactObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactObject.h; sourceTree = "<group>"; };
+		9F39C7B01B44E1AA0067869B /* ContactObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactObject.m; sourceTree = "<group>"; };
 		9F3A71C31B299C790032677E /* LoginToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginToken.h; sourceTree = "<group>"; };
 		9F3A71C41B299C790032677E /* LoginToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginToken.m; sourceTree = "<group>"; };
 		9F3FE8D31B21965700CC49F4 /* filter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filter.png; sourceTree = "<group>"; };
@@ -568,6 +571,8 @@
 				9F3A71C41B299C790032677E /* LoginToken.m */,
 				9F282D6C1B3A931400D8FBD5 /* Notification.h */,
 				9F282D6D1B3A931400D8FBD5 /* Notification.m */,
+				9F39C7AF1B44E1AA0067869B /* ContactObject.h */,
+				9F39C7B01B44E1AA0067869B /* ContactObject.m */,
 			);
 			name = http;
 			sourceTree = "<group>";
@@ -753,6 +758,7 @@
 				TargetAttributes = {
 					9F3851CF1B1E8A14005E3B8B = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = LNMMM7J8HZ;
 					};
 					9F3851E81B1E8A14005E3B8B = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -929,6 +935,7 @@
 				9F3852AC1B1EA077005E3B8B /* GateObject.m in Sources */,
 				9F3852201B1E9368005E3B8B /* UIView+RootView.m in Sources */,
 				9F41C11D1B3263EE003E0679 /* QuailtyChartController.m in Sources */,
+				9F39C7B11B44E1AA0067869B /* ContactObject.m in Sources */,
 				9F3852601B1E9E20005E3B8B /* UUChart.m in Sources */,
 				9F38522A1B1E973F005E3B8B /* WaterQualityController.m in Sources */,
 				9F3852AB1B1EA077005E3B8B /* DoubleChartObject.m in Sources */,
@@ -1055,15 +1062,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: roger ace (W6A2225E87)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: roger ace (W6A2225E87)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: roger ace (LNMMM7J8HZ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: roger ace (LNMMM7J8HZ)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/ZDWater2/PrefixHeader.pch";
 				INFOPLIST_FILE = ZDWater2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c170e487-2b4c-4c20-8c31-74e79e864c95";
+				PROVISIONING_PROFILE = "23db81b4-c41b-4a9d-8436-170149f4ec81";
 			};
 			name = Debug;
 		};
@@ -1073,15 +1080,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: roger ace (W6A2225E87)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: roger ace (W6A2225E87)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: roger ace (LNMMM7J8HZ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: roger ace (LNMMM7J8HZ)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/ZDWater2/PrefixHeader.pch";
 				INFOPLIST_FILE = ZDWater2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c170e487-2b4c-4c20-8c31-74e79e864c95";
+				PROVISIONING_PROFILE = "23db81b4-c41b-4a9d-8436-170149f4ec81";
 			};
 			name = Release;
 		};
