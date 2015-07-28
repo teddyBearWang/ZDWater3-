@@ -12,6 +12,8 @@
 #import "WaterCell.h"
 #import "UUChart.h"
 #import "SVProgressHUD.h"
+#import "HeaderView.h"
+#import "MyTimeView.h"
 
 @interface WaterYieldController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -19,10 +21,19 @@
     UUChart *chartView;
     UIView *chart_bg_view; //存在chart的视图
     
+    UITableView *_myTableView;
+    NSArray *_headers;//列表头部
+    NSMutableArray *_stations;//站点tableView数据源
+    
+    NSUInteger _kCount;
+    
+    
 }
 @property (strong, nonatomic)  UIButton *chartBtn;
 @property (weak, nonatomic) IBOutlet UIButton *tableBtn;
-@property (strong, nonatomic) UITableView *myTableView;
+@property (strong, nonatomic) UIView *myHeaderView;
+
+@property (nonatomic, strong) MyTimeView *myStationView;//左侧列表
 - (IBAction)tableSelectedAction:(id)sender;
 - (IBAction)chartSelectedAction:(id)sender;
 
@@ -34,7 +45,7 @@
 {
     [super viewWillAppear:animated];
  
-    [self.myTableView reloadData];
+    [_myTableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -45,16 +56,56 @@
     }
 }
 
+- (void)viewWillLayoutSubviews
+{
+    if ([_myTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_myTableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+    }
+    
+    if ([_myTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_myTableView setLayoutMargins:UIEdgeInsetsMake(0, 0, 0, 0)];
+    }
+}
+
+- (void)initData
+{
+    _headers = @[@"行政区划",@"当前流量(m³)",@"流速(m/s)"];
+    _kCount = _headers.count;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"实时水量";
     
-    self.myTableView = [[UITableView alloc] initWithFrame:(CGRect){0,0,self.view.frame.size.width,self.view.frame.size.height - 64} style:UITableViewStylePlain];
-    self.myTableView.rowHeight = 44;
-    self.myTableView.delegate = self;
-    self.myTableView.dataSource = self;
-    [self.view addSubview:self.myTableView];
+    [self initData];
+    
+    UIView *tableViewHeaderView = [[UIView alloc] initWithFrame:(CGRect){0,0,_kCount*kWidth,kHeight}];
+    tableViewHeaderView.backgroundColor = BG_COLOR;
+    self.myHeaderView = tableViewHeaderView;
+    
+    for (int i=0; i<_kCount; i++) {
+        HeaderView *header = [[HeaderView alloc] initWithFrame:(CGRect){i*kWidth,0,kWidth,kHeight}];
+        header.num = _headers[i];
+        [tableViewHeaderView addSubview:header];
+    }
+    
+    _myTableView = [[UITableView alloc] initWithFrame:(CGRect){0,0,self.myHeaderView.frame.size.width,kScreen_height - 64} style:UITableViewStylePlain];
+    _myTableView.delegate = self;
+    _myTableView.dataSource = self;
+    
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:(CGRect){kWidth,0,kScreen_Width - kWidth,kScreen_height - 64}];
+    [scrollView addSubview:_myTableView];
+    scrollView.showsHorizontalScrollIndicator = NO;
+    scrollView.bounces = NO;
+    scrollView.contentSize = CGSizeMake(self.myHeaderView.frame.size.width, 0);
+    [self.view addSubview:scrollView];
+    
+    self.myStationView = [[MyTimeView alloc] initWithFrame:(CGRect){0,0,kWidth,kScreen_height}];
+    self.myStationView.listData = _stations;//数据源
+    self.myStationView.headTitle = @"监测站";
+    [self.view addSubview:self.myStationView];
+    
     self.tableBtn.selected = YES;//默认是选择状态的
     
     UISegmentedControl *seg = [[UISegmentedControl alloc] initWithItems:@[@"水量列表",@"水量图表"]];
@@ -81,16 +132,22 @@ static  BOOL ret;
             //进入到主线程进行更新UI
             dispatch_async(dispatch_get_main_queue(), ^{
                 [SVProgressHUD dismissWithSuccess:@"加载成功"];
-                ret = YES;
                 listData = [WaterYield requestWithDatas];
                 if(listData.count != 0){
+                    ret = YES;
+                    _stations = [NSMutableArray arrayWithCapacity:listData.count];
+                    for (NSDictionary *dic in listData) {
+                        [_stations addObject:[dic objectForKey:@"Stnm"]];
+                    }
+                    [self.myStationView refrushTableView:_stations];
                     //当数据源不为0的时候划折线图
                     [self initChartView];
+                    
                 }else{
                     ret = NO;
                     listData = [NSArray arrayWithObject:@"当前无数据"];
                 }
-                [self.myTableView reloadData];
+                [_myTableView reloadData];
             });
         }else{
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -116,11 +173,11 @@ static  BOOL ret;
         //列表
         self.chartBtn.selected = NO;
         chart_bg_view.hidden = YES;
-        self.myTableView.hidden = NO;
+        _myTableView.hidden = NO;
     }else{
         //图表
         self.tableBtn.selected = NO;
-        self.myTableView.hidden = YES;
+        _myTableView.hidden = YES;
         chart_bg_view.hidden = NO;
     }
 }
@@ -172,9 +229,9 @@ static  BOOL ret;
             cell = (WaterCell *)[[[NSBundle mainBundle] loadNibNamed:@"WaterCell" owner:nil options:nil] lastObject];
         }
         NSDictionary *dic = [listData objectAtIndex:indexPath.row];
-        cell.stationName.text = [[dic objectForKey:@"Stnm"] isEqual:@""] ? @"--" : [dic objectForKey:@"Stnm"];
-        cell.lastestLevel.text = [[dic objectForKey:@"planVal"] isEqual:@""] ? @"--" : [dic objectForKey:@"planVal"];
-        cell.warnWater.text = [[dic objectForKey:@"realVal"] isEqual:@""] ? @"--" : [dic objectForKey:@"realVal"];
+        cell.areaName.text = [[dic objectForKey:@"Adnm"] isEqual:@""] ? @"--" : [dic objectForKey:@"Adnm"];
+        cell.speed.text = [[dic objectForKey:@"planVal"] isEqual:@""] ? @"--" : [dic objectForKey:@"planVal"];
+        cell.currentSpeed.text = [[dic objectForKey:@"realVal"] isEqual:@""] ? @"--" : [dic objectForKey:@"realVal"];
         return cell;
     }else{
         //无数据
@@ -185,16 +242,22 @@ static  BOOL ret;
 
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 40;
-}
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    CustomHeaderView *headview = [[CustomHeaderView alloc] initWithFirstLabel:@"站名" withSecond:@"计划流量" withThree:@"实际流量"];
-    headview.backgroundColor = BG_COLOR;
-    return headview;
+    
+    return self.myHeaderView;
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return kHeight;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return kHeight;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

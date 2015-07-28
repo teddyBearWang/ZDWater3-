@@ -78,7 +78,7 @@
     // Do any additional setup after loading the view.
     
     //设置标题
-    self.title = @"水质柱状图";
+    self.title = @"水质等级柱状图";
     
     UIView *dateView = [self createSelectTimeView];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:dateView];
@@ -89,8 +89,8 @@
     //表示折线图上单条线
     for (int i=0; i<self.datas.count; i++) {
         NSDictionary *dic = [self.datas objectAtIndex:i];
-        [xs addObject:[dic objectForKey:@"CZMC"]];
-        [ys addObject:[dic objectForKey:@"ZD"]];
+        [xs addObject:[dic objectForKey:@"Stnm"]];
+        [ys addObject:[dic objectForKey:@"Szdjc"]];
     }
     x_Labels = (NSArray *)xs;
     y_Values = (NSArray *)ys;
@@ -159,6 +159,7 @@
         //时间往前推一天
         NSDate *back_date = [current dateByAddingTimeInterval:-60*60*24];
         _showTimeLabel.text = [self requestDate:back_date];
+        NSLog(@"时间：%@",_showTimeLabel.text);
     }else{
         //时间往后推一天
         NSDate *next_date = [current dateByAddingTimeInterval:60*60*24];
@@ -175,13 +176,14 @@
         NSMutableArray *yValue = [NSMutableArray arrayWithCapacity:arr.count];
         for (int i=0; i<arr.count; i++) {
             NSDictionary *dic = [arr objectAtIndex:i];
-            [xValue addObject:[dic objectForKey:@"CZMC"]];
-            [yValue addObject:[dic objectForKey:@"ZD"]];
+            [xValue addObject:[dic objectForKey:@"Stnm"]];
+            [yValue addObject:[dic objectForKey:@"Szdjc"]];
         }
         x_Labels = (NSArray *)xValue;
         y_Values = (NSArray *)yValue;
         
         [self alertAction];
+        [self initChartView];
     }
     
 }

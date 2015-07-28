@@ -9,16 +9,29 @@
 #import "WaterLevelController.h"
 #import "CustomHeaderView.h"
 #import "WaterSituation.h"
-#import "WaterCell.h"
+#import "WaterLevelCell.h"
 #import "ChartViewController.h"
 #import "SVProgressHUD.h"
 #import "CustomDateActionSheet.h"
+#import "MyTimeView.h"
+#import "HeaderView.h"
+
+//因为最后一个时间lable的宽度为120 ，前面的label宽度为100，因此需要额外加上20
+#define TimeOverWidth 20
 
 @interface WaterLevelController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate>
 {
     NSArray *waterLevels; //水情数据源
+    NSArray *_headers;//列表头部数据源
+    NSMutableArray *_stations;// 站点tableVIew的数据源
+    
+    NSUInteger _kCount;
+    
+    UITableView *_myTableView;
 }
-@property (strong, nonatomic)  UITableView *myTableView;
+@property (strong, nonatomic)  UIView *myHeaderVIew;
+
+@property (strong, nonatomic) MyTimeView *myStationView;//左侧站点列表
 
 @end
 
@@ -47,17 +60,60 @@
     }
 }
 
+- (void)viewWillLayoutSubviews
+{
+    if ([_myTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_myTableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+    }
+    
+    if ([_myTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_myTableView setLayoutMargins:UIEdgeInsetsMake(0, 0, 0, 0)];
+    }
+}
+
+- (void)initData
+{
+    _headers = @[@"行政区划",@"8时水位(m)",@"当前水位(m)",@"当前水位时间"];
+    _kCount = _headers.count;
+}
+
 static BOOL ret = NO;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"实时水位";
     
-    self.myTableView = [[UITableView alloc] initWithFrame:(CGRect){0,0,self.view.frame.size.width,self.view.frame.size.height - 64} style:UITableViewStylePlain];
-    self.myTableView.delegate = self;
-    self.myTableView.dataSource = self;
-    self.myTableView.rowHeight = 44;
-    [self.view addSubview:self.myTableView];
+    [self initData];
+    
+    UIView *tableHeaderView = [[UIView alloc] initWithFrame:(CGRect){0,0,_kCount*kWidth + TimeOverWidth,kHeight}];
+    tableHeaderView.backgroundColor = BG_COLOR;
+    self.myHeaderVIew = tableHeaderView;
+    
+    for (int i=0; i<_kCount; i++) {
+        HeaderView *headerView = [[HeaderView alloc] initWithFrame:(CGRect){i*kWidth,0,kWidth,kHeight}];
+        headerView.num = _headers[i];
+        [tableHeaderView addSubview:headerView];
+    }
+    
+    
+    
+    _myTableView = [[UITableView alloc] initWithFrame:(CGRect){0,0,self.myHeaderVIew.frame.size.width + TimeOverWidth,kScreen_height - 64} style:UITableViewStylePlain];
+    _myTableView.delegate = self;
+    _myTableView.dataSource = self;
+//    [self.view addSubview:_myTableView];
+    
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:(CGRect){kWidth+20,0,kScreen_Width - kWidth,kScreen_height - 64}];
+    [scrollView addSubview:_myTableView];
+    scrollView.showsHorizontalScrollIndicator = NO;
+    scrollView.bounces = NO;
+    scrollView.contentSize = CGSizeMake(self.myHeaderVIew.frame.size.width + TimeOverWidth, 0);
+    [self.view addSubview:scrollView];
+    
+    self.myStationView = [[MyTimeView alloc] initWithFrame:(CGRect){0,0,kWidth+20,kScreen_height - 64}];
+    self.myStationView.listData = _stations;//数据源
+    self.myStationView.headTitle = @"监测站";
+    [self.view addSubview:self.myStationView];
+    
     UIButton *select_time = [UIButton buttonWithType:UIButtonTypeCustom];
     select_time.frame = (CGRect){0,0,20,20};
     select_time.backgroundColor = [UIColor clearColor];
@@ -104,12 +160,19 @@ static BOOL ret = NO;
     dispatch_async(dispatch_get_main_queue(), ^{
         //
         waterLevels = [WaterSituation requestWaterData];
-        ret = YES;
-        if (waterLevels.count == 0) {
+        if (waterLevels.count != 0) {
+            ret = YES;
+            _stations = [NSMutableArray arrayWithCapacity:waterLevels.count];
+            for (NSDictionary *dic in waterLevels) {
+                [_stations addObject:[dic objectForKey:@"Stnm"]];
+            }
+            [self.myStationView refrushTableView:_stations];
+        }else{
+            
             ret = NO;
             waterLevels = [NSArray arrayWithObject:@"当前暂无水情数据"];
         }
-        [self.myTableView reloadData];
+        [_myTableView reloadData];
     });
 }
 
@@ -170,14 +233,15 @@ static BOOL ret = NO;
     if(ret)
     {
         //有数据的时候
-        WaterCell *cell = (WaterCell *)[tableView dequeueReusableCellWithIdentifier:@"WaterCell"];
+        WaterLevelCell *cell = (WaterLevelCell *)[tableView dequeueReusableCellWithIdentifier:@"WaterLevel"];
         if (cell == nil) {
-            cell = (WaterCell *)[[[NSBundle mainBundle] loadNibNamed:@"WaterCell" owner:self options:nil] lastObject];
+            cell = (WaterLevelCell *)[[[NSBundle mainBundle] loadNibNamed:@"WaterLevel" owner:self options:nil] lastObject];
         }
         NSDictionary *dic = [waterLevels objectAtIndex:indexPath.row];
-        cell.stationName.text = [[dic objectForKey:@"Stnm"] isEqual:@""] ? @"--" : [dic objectForKey:@"Stnm"];
-        cell.lastestLevel.text = [[dic objectForKey:@"NowValue"] isEqual:@""] ? @"--" : [dic objectForKey:@"NowValue"];
-        cell.warnWater.text = [[dic objectForKey:@"WarningLine"] isEqual:@""] ? @"--" : [dic objectForKey:@"WarningLine"];
+        cell.areaLabel.text = [[dic objectForKey:@"Adnm"] isEqual:@""] ? @"--" : [dic objectForKey:@"Adnm"];
+        cell.eightLabel.text = [[dic objectForKey:@"EighthValue"] isEqual:@""] ? @"--" : [dic objectForKey:@"EighthValue"];
+        cell.currentLabel.text = [[dic objectForKey:@"NowValue"] isEqual:@""] ? @"--" : [dic objectForKey:@"NowValue"];
+        cell.currentTime.text = [[dic objectForKey:@"NowTime"] isEqual:@""] ? @"--" : [dic objectForKey:@"NowTime"];
         return cell;
     }else{
         //无数据
@@ -189,15 +253,30 @@ static BOOL ret = NO;
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    CustomHeaderView *view = [[CustomHeaderView alloc] initWithFirstLabel:@"测站" withSecond:@"最新(m)" withThree:@"超警(m)"];
-    view.backgroundColor = BG_COLOR;
-    return view;
+
+    return self.myHeaderVIew;
     
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 40;
+    return kHeight;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return kHeight;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -211,6 +290,20 @@ static BOOL ret = NO;
     chart.functionType = FunctionSingleChart;
     [self.navigationController pushViewController:chart animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offSetY = _myTableView.contentOffset.y;//tableVIew的Y方向的偏移
+    
+    CGPoint timeOffSet = self.myStationView.myTableView.contentOffset;
+    
+    timeOffSet.y = offSetY;
+    
+    self.myStationView.myTableView.contentOffset = timeOffSet;
+    if (offSetY == 0) {
+        self.myStationView.myTableView.contentOffset = CGPointZero;
+    }
 }
 
 @end

@@ -8,10 +8,10 @@
 
 #import "GateViewController.h"
 #import "CustomHeaderView.h"
-#import "WaterCell.h"
 #import "GateObject.h"
 #import "ChartViewController.h"
 #import "SVProgressHUD.h"
+#import "GateCell.h"
 
 @interface GateViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -92,21 +92,21 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //有数据的时候
-    WaterCell *cell = (WaterCell *)[tableView dequeueReusableCellWithIdentifier:@"WaterCell"];
+    GateCell *cell = (GateCell *)[tableView dequeueReusableCellWithIdentifier:@"GateCell"];
     if (cell == nil) {
-        cell = (WaterCell *)[[[NSBundle mainBundle] loadNibNamed:@"WaterCell" owner:nil options:nil] lastObject];
+        cell = (GateCell *)[[[NSBundle mainBundle] loadNibNamed:@"Gate" owner:nil options:nil] lastObject];
     }
     NSDictionary *dic = [listData objectAtIndex:indexPath.row];
-    cell.stationName.text = [[dic objectForKey:@"SubStnm"] isEqual:@""] ? @"--" : [dic objectForKey:@"SubStnm"];
-    cell.lastestLevel.text = [[dic objectForKey:@"ZkCount"] isEqual:@""] ? @"--" : [dic objectForKey:@"ZkCount"];
-    cell.warnWater.text = [[dic objectForKey:@"maxKD"] isEqual:@""] ? @"--" : [dic objectForKey:@"maxKD"];
+    cell.nameLabel.text = [[dic objectForKey:@"Stnm"] isEqual:@""] ? @"--" : [dic objectForKey:@"Stnm"];
+    cell.kCountLabel.text = [[dic objectForKey:@"ZkCount"] isEqual:@""] ? @"--" : [dic objectForKey:@"ZkCount"];
+    cell.kOpenCountLabel.text = [[dic objectForKey:@"ZkOpenCount"] isEqual:@""] ? @"--" : [dic objectForKey:@"ZkOpenCount"];
     return cell;
 
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    CustomHeaderView *headview = [[CustomHeaderView alloc] initWithFirstLabel:@"名称" withSecond:@"闸孔" withThree:@"开度"];
+    CustomHeaderView *headview = [[CustomHeaderView alloc] initWithFirstLabel:@"闸门名称" withSecond:@"闸孔数量(个)" withThree:@"已开启个数(个)"];
     headview.backgroundColor = BG_COLOR;
     return headview;
 }
@@ -122,8 +122,8 @@
     ChartViewController *chart = [[ChartViewController alloc] init];
     chart.requestType = @"GetZmChart";
     chart.chartType = 1;//折线图
-    chart.title_name = dic[@"SubStnm"];
-    chart.stcd = dic[@"SubStcd"];
+    chart.title_name = dic[@"Stnm"];
+    chart.stcd = dic[@"Stcd"];
     chart.functionType = FunctionDoubleChart;
     [self.navigationController pushViewController:chart animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

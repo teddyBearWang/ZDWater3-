@@ -9,19 +9,30 @@
 #import "WaterQualityController.h"
 #import "CustomHeaderView.h"
 #import "WaterQuality.h"
-#import "RainCell.h"
+#import "WaterQualityCell.h"
 #import "QualityDetailController.h"
 #import "QualityDetaiObject.h"
 #import "CustomDateActionSheet.h"
 #import "ChartViewController.h"
 #import "SVProgressHUD.h"
 #import "QuailtyChartController.h"
+#import "MyTimeView.h"
+#import "HeaderView.h"
+
 
 @interface WaterQualityController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
 {
-    NSArray *listData;
+    NSArray *listData;//数据源
+    UITableView *_myTableView; //右侧列表
+    
+    NSArray *_headers;//列表顶部字段
+    NSMutableArray *_stations;//站点tableView数据源
+    
+    NSUInteger _kCount;
 }
-@property (strong, nonatomic) UITableView *myTableView;
+@property (strong, nonatomic) UIView *myHeaderView;//顶部视图
+
+@property (nonatomic, strong) MyTimeView *myStationView;//左侧站点列表
 
 @end
 
@@ -51,17 +62,59 @@
     }
 }
 
+- (void)viewWillLayoutSubviews
+{
+    if ([_myTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_myTableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+    }
+    
+    if ([_myTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_myTableView setLayoutMargins:UIEdgeInsetsMake(0, 0, 0, 0)];
+    }
+}
+
+- (void)initData
+{
+    _headers = @[@"行政区划",@"水质等级",@"氨氮(mg/L)",@"总磷(mg/l)"];
+    
+    _kCount = _headers.count;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"实时水质";
     
-    self.myTableView = [[UITableView alloc] initWithFrame:(CGRect){0,0,self.view.frame.size.width,self.view.frame.size.height - 64} style:UITableViewStylePlain];
-    self.myTableView.delegate = self;
-    self.myTableView.dataSource = self;
+    [self initData];
+    UIView *tableViewHeader = [[UIView alloc] initWithFrame:(CGRect){0,0,_kCount*kWidth,kHeight}];
+    tableViewHeader.backgroundColor = BG_COLOR;
+    self.myHeaderView = tableViewHeader;
+    
+    for (int i=0; i<_kCount; i++) {
+        HeaderView *header = [[HeaderView alloc] initWithFrame:(CGRect){i*kWidth,0,kWidth,kHeight}];
+        header.num = _headers[i];
+        [tableViewHeader addSubview:header];
+    }
+    
+    _myTableView = [[UITableView alloc] initWithFrame:(CGRect){0,0,self.myHeaderView.frame.size.width,kScreen_height - 64} style:UITableViewStylePlain];
+    _myTableView.delegate = self;
+    _myTableView.dataSource = self;
+    _myTableView.bounces = NO;
+    
+    
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:(CGRect){kWidth,0,kScreen_Width - kWidth,kScreen_height - 64}];
+    [scrollView addSubview:_myTableView];
+    scrollView.showsHorizontalScrollIndicator = NO;
+    scrollView.bounces = NO;
+    scrollView.contentSize = CGSizeMake(self.myHeaderView.frame.size.width, 0);
+    [self.view addSubview:scrollView];
+    
+    self.myStationView = [[MyTimeView alloc] initWithFrame:(CGRect){0,0,kWidth,kScreen_height - 64}];
+    self.myStationView.listData = _stations;
+    self.myStationView.headTitle = @"监测站";
+    [self.view addSubview:self.myStationView];
+    
     NSDate *now = [NSDate date];
-    self.myTableView.rowHeight = 44;
-    [self.view addSubview:self.myTableView];
     NSArray *dates =(NSArray *)[self getRequestDates:now];
     
     //异步加载网络数据
@@ -101,8 +154,15 @@ static BOOL ret;
                 //进入到主线程中，更新UI
                 [SVProgressHUD dismissWithSuccess:@"加载成功"];
                 listData = [WaterQuality RequestData];
-                ret = YES;
-                [self.myTableView reloadData];
+                if (listData.count != 0) {
+                    ret = YES;
+                    _stations = [NSMutableArray arrayWithCapacity:listData.count];
+                    for (NSDictionary *dic in listData) {
+                        [_stations addObject:[dic objectForKey:@"Stnm"]];
+                    }
+                    [self.myStationView refrushTableView:_stations];
+                }
+                [_myTableView reloadData];
             });
         }else{
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -179,15 +239,15 @@ static BOOL ret;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (ret) {
-        RainCell *cell = (RainCell *)[tableView dequeueReusableCellWithIdentifier:@"WaterCell"];
+        WaterQualityCell *cell = (WaterQualityCell *)[tableView dequeueReusableCellWithIdentifier:@"WaterQuality"];
         if (cell == nil) {
-            cell = (RainCell *)[[[NSBundle mainBundle] loadNibNamed:@"Rain" owner:self options:nil] lastObject];
+            cell = (WaterQualityCell *)[[[NSBundle mainBundle] loadNibNamed:@"quality" owner:self options:nil] lastObject];
         }
         NSDictionary *dic = [listData objectAtIndex:indexPath.row];
-        cell.area.text = [[dic objectForKey:@"CZMC"] isEqual:@""] ? @"--" : [dic objectForKey:@"CZMC"];
-        cell.oneHour.text = [[dic objectForKey:@"RJY"] isEqual:@""] ? @"--" : [dic objectForKey:@"RJY"];
-        cell.threeHour.text = [[dic objectForKey:@"PH"] isEqual:@""] ? @"--" : [dic objectForKey:@"PH"];
-        cell.today.text = [[dic objectForKey:@"ZD"] isEqual:@""] ? @"--" : [dic objectForKey:@"ZD"];
+        cell.areaLabel.text = [[dic objectForKey:@"Adnm"] isEqualToString:@""] ? @"--" : [dic objectForKey:@"Adnm"];
+        cell.level.text = [[dic objectForKey:@"Szdj"] isEqualToString:@""] ? @"--" : [dic objectForKey:@"Szdj"];
+        cell.NHLabel.text = [[dic objectForKey:@"Ad"] isEqualToString:@""] ? @"--" : [dic objectForKey:@"Ad"];
+        cell.pLabel.text = [[dic objectForKey:@"Zl"] isEqualToString:@""] ? @"--" : [dic objectForKey:@"Zl"];
         return cell;
     }else{
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MyCell"];
@@ -199,16 +259,32 @@ static BOOL ret;
     }
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIView *headView = (UIView *)[[[NSBundle mainBundle] loadNibNamed:@"quality" owner:self options:nil] lastObject];
-    headView.backgroundColor = BG_COLOR;
-    return headView;
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 40;
+    
+    return kHeight;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return kHeight;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    
+    return self.myHeaderView;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -217,7 +293,7 @@ static BOOL ret;
     NSArray *dates =(NSArray *)[self getRequestDates:now]; //时间数组
     
     NSDictionary *dic = [listData objectAtIndex:indexPath.row];
-    BOOL ret = [QualityDetaiObject fetchWithType:@"GetSzInfoView" start:[dates objectAtIndex:0] end:[dates objectAtIndex:1] stcd:[dic objectForKey:@"CZBH"] ascd:[dic objectForKey:@"ASCD"]];
+    BOOL ret = [QualityDetaiObject fetchWithType:@"GetSzInfoView" start:[dates objectAtIndex:0] end:[dates objectAtIndex:1] stcd:[dic objectForKey:@"Stcd"] ascd:[dic objectForKey:@"Ascd"]];
     if (ret) {
         QualityDetailController *quality = [[QualityDetailController alloc] init];
         //获取数据源
@@ -228,5 +304,19 @@ static BOOL ret;
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offSetY = _myTableView.contentOffset.y;//tableVIew的Y方向的偏移
+    
+    CGPoint timeOffSet = self.myStationView.myTableView.contentOffset;
+    
+    timeOffSet.y = offSetY;
+    
+    self.myStationView.myTableView.contentOffset = timeOffSet;
+    if (offSetY == 0) {
+        self.myStationView.myTableView.contentOffset = CGPointZero;
+    }
 }
 @end

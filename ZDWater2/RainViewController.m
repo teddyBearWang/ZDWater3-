@@ -14,15 +14,24 @@
 #import "UIView+RootView.h"
 #import "SVProgressHUD.h"
 #import "CustomDateActionSheet.h"
+#import "MyCell.h"
+#import "HeaderView.h"
+#import "MyTimeView.h"
 
 @interface RainViewController ()<UITableViewDataSource,UITableViewDelegate,SelectItemsDelegate,UIActionSheetDelegate>
 {
     NSArray *listData; //tableVIew的数据源
     NSMutableArray *sourceDatas;//所有的数据
+    UITableView *_myTableView; //右侧列表
+    NSArray *_headers;//列表头部数据源
+    NSMutableArray *_stations;//站点tableView的数据源
+    
+    NSUInteger _kCount;
     BOOL ret;
 }
-@property (strong, nonatomic) UITableView *myTableView;
+@property (strong, nonatomic) UIView *myHeaderView;
 
+@property (nonatomic, strong) MyTimeView *myTimeView;
 @end
 
 @implementation RainViewController
@@ -51,18 +60,68 @@
     }
 }
 
+- (void)viewWillLayoutSubviews
+{
+    if ([_myTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_myTableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+    }
+    
+    if ([_myTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_myTableView setLayoutMargins:UIEdgeInsetsMake(0, 0, 0, 0)];
+    }
+}
+
+- (void)initData
+{
+    _headers = @[@"行政区划名称",@"1h雨量(mm)",@"3h雨量(mm)",@"6h雨量(mm)",@"24h雨量(mm)",@"72h雨量",@"警戒雨量(mm)"];
+    _kCount = _headers.count;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"实时雨情";
+
     
-    self.myTableView = [[UITableView alloc] initWithFrame:(CGRect){0,0,self.view.frame.size.width,self.view.frame.size.height - 64} style:UITableViewStylePlain];
-    self.myTableView.rowHeight = 44;
-    self.myTableView.delegate = self;
-    self.myTableView.dataSource = self;
-    [self.view addSubview:self.myTableView];
+    //初始化headerView
+    [self initData];
+    UIView *tableViewHeader = [[UIView alloc] initWithFrame:(CGRect){0,0,_kCount * kWidth, kHeight}];
+    tableViewHeader.backgroundColor = BG_COLOR;
+    self.myHeaderView = tableViewHeader;
+    
+    for (int i=0; i<_kCount; i++) {
+        HeaderView *headerView = [[HeaderView alloc] initWithFrame:CGRectMake(i*kWidth, 0, kWidth, kHeight)];
+        headerView.num = _headers[i];
+        [tableViewHeader addSubview:headerView];
+    }
     
     
+    _myTableView = [[UITableView alloc] initWithFrame:(CGRect){0,0,self.myHeaderView.frame.size.width,kScreen_height-64} style:UITableViewStylePlain];
+    _myTableView.rowHeight = 44;
+    _myTableView.delegate = self;
+    _myTableView.dataSource = self;
+    
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:(CGRect){kWidth, 0,kScreen_Width - kWidth , kScreen_height-64}];
+    [scrollView addSubview:_myTableView];
+    scrollView.showsHorizontalScrollIndicator = NO;
+    scrollView.bounces = NO;
+    scrollView.contentSize = CGSizeMake(self.myHeaderView.frame.size.width, 0);
+    [self.view addSubview:scrollView];
+    
+    self.myTimeView = [[MyTimeView alloc] initWithFrame:(CGRect){0,0,kWidth,kScreen_height-64}];
+    self.myTimeView.listData = _stations;//数据源
+    self.myTimeView.headTitle = @"监测站名称";
+    [self.view addSubview:self.myTimeView];
+    [self initBar];
+    
+    NSDate *now = [NSDate date];
+    NSString *date_str = [self requestDate:now];
+    [self refresh:date_str];
+
+}
+
+- (void)initBar
+{
     UIView *leftView = [[UIView alloc] initWithFrame:(CGRect){0,0,70,20}];
     UIButton *filter_btn = [UIButton buttonWithType:UIButtonTypeCustom];
     filter_btn.frame = (CGRect){0,0,20,20};
@@ -71,21 +130,16 @@
     [filter_btn addTarget:self action:@selector(selectTimeAction:) forControlEvents:UIControlEventTouchUpInside];
     [leftView addSubview:filter_btn];
     
+    //区域筛选
     UIButton *selct_btn = [UIButton buttonWithType:UIButtonTypeCustom];
     selct_btn.frame = (CGRect){50,0,20,20};
     [selct_btn setCorners:5.0];
     [selct_btn setBackgroundImage:[UIImage imageNamed:@"filter"] forState:UIControlStateNormal];
     [selct_btn addTarget:self action:@selector(filterAction:) forControlEvents:UIControlEventTouchUpInside];
-    [leftView addSubview:selct_btn];
+   // [leftView addSubview:selct_btn];
     
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:leftView];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:filter_btn];
     self.navigationItem.rightBarButtonItem = item;
-    
-  //  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadCompleteAction:) name:kLoadCompleteNotification object:nil];
-    NSDate *now = [NSDate date];
-    NSString *date_str = [self requestDate:now];
-    [self refresh:date_str];
-
 }
 
 - (void)refresh:(NSString *)date_str
@@ -93,14 +147,23 @@
  
     [SVProgressHUD showWithStatus:@"加载中..."];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        if([RainObject fetchWithType:@"GetYqInfo" withArea:@"33" withDate:date_str withstart:@"0" withEnd:@"10000"]){
+        if([RainObject fetchWithType:@"GetYqInfo" withArea:@"33" withDate:date_str withstart:@"0" withEnd:@"1100"]){
             dispatch_async(dispatch_get_main_queue(), ^{
                 [SVProgressHUD dismissWithSuccess:@"加载成功"];
                 //将获取到得数据传递给tableView的数据源
-                ret = YES;
                 listData = [RainObject requestRainData];
-                sourceDatas = [NSMutableArray arrayWithArray:listData];
-                [self.myTableView reloadData];
+                if (listData.count != 0) {
+                    ret = YES;
+                    sourceDatas = [NSMutableArray arrayWithArray:listData];
+                    
+                    _stations = [NSMutableArray arrayWithCapacity:sourceDatas.count];
+                    for (NSDictionary *dic in sourceDatas) {
+                        [_stations addObject:[dic objectForKey:@"Stnm"]];
+                    }
+                    //刷新左侧列表
+                    [self.myTimeView refrushTableView:_stations];
+                }
+                [_myTableView reloadData];
             });
         }else{
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -163,25 +226,36 @@
     
         RainCell *cell = (RainCell *)[[[NSBundle mainBundle] loadNibNamed:@"Rain" owner:self options:nil] lastObject];
         NSDictionary *dic = [listData objectAtIndex:indexPath.row];
-        cell.stationName.text = [[dic objectForKey:@"Stnm"] isEqual:@""]?@"--" : [dic objectForKey:@"Stnm"];
+        cell.stationName.text = [[dic objectForKey:@"Adnm"] isEqual:@""]?@"--" : [dic objectForKey:@"Stnm"];
         cell.oneHour.text = [[dic objectForKey:@"Last1Hours"] isEqual:@""] ? @"--" :[dic objectForKey:@"Last1Hours"];
         
         cell.threeHour.text = [[dic objectForKey:@"Last3Hours"] isEqual:@""] ? @"--" : [dic objectForKey:@"Last3Hours"];
+        cell.sixHour.text = [[dic objectForKey:@"Last6Hours"] isEqual:@""] ? @"--" : [dic objectForKey:@"Last6Hours"];
+        cell.threeDays.text = [[dic objectForKey:@"Last48Hours"] isEqual:@""] ? @"--" : [dic objectForKey:@"Last48Hours"];
+
         cell.today.text = [[dic objectForKey:@"Last24Hours"] isEqual:@""] ?@"--" : [dic objectForKey:@"Last24Hours"];
+        cell.warn.text = [[dic objectForKey:@"WarningValue"] isEqual:@""] ?@"--" : [dic objectForKey:@"WarningValue"];
         return cell;
 }
 
 //这样的话，headView不随着cell滚动
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *headView = (UIView *)[[[NSBundle mainBundle] loadNibNamed:@"RainHeaderView" owner:self options:nil] lastObject];
-    headView.backgroundColor = BG_COLOR;
-    return headView;
+//    UIView *headView = (UIView *)[[[NSBundle mainBundle] loadNibNamed:@"RainHeaderView" owner:self options:nil] lastObject];
+//    headView.backgroundColor = BG_COLOR;
+//    return headView;
+    return self.myHeaderView;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 40;
+    
+    return kHeight;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return kHeight;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -196,6 +270,31 @@
     [self.navigationController pushViewController:chart animated:YES];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offSetY = _myTableView.contentOffset.y;//tableVIew的Y方向的偏移
+    
+    CGPoint timeOffSet = self.myTimeView.myTableView.contentOffset;
+    
+    timeOffSet.y = offSetY;
+    
+    self.myTimeView.myTableView.contentOffset = timeOffSet;
+    if (offSetY == 0) {
+        self.myTimeView.myTableView.contentOffset = CGPointZero;
+    }
 }
 
 #pragma mark - SelectItemsDelegate
@@ -218,7 +317,7 @@
         listData = (NSArray *)countArr;
     }
     
-    [self.myTableView reloadData];
+    [_myTableView reloadData];
 }
 
 

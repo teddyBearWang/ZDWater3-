@@ -132,20 +132,20 @@
             bar.grade = grade;
             [myScrollView addSubview:bar];
             
-            float y = myScrollView.frame.size.height - (UULabelHeight*4+(bar.frame.size.height * grade));
-            UUChartLabel *valueLabel = [[UUChartLabel alloc] initWithFrame:CGRectMake(bar.frame.origin.x, y - 5, bar.frame.size.width+15, UULabelHeight)];
-            if ([valueString floatValue] != 0) {
-                valueLabel.text = valueString;
-            }
-            if ([valueString floatValue] < 0) {
-                valueLabel.textColor = [UIColor redColor];
-            }
-            [myScrollView addSubview:valueLabel];
-
+//            float y = myScrollView.frame.size.height - (UULabelHeight*4+(bar.frame.size.height * grade));
+//            UUChartLabel *valueLabel = [[UUChartLabel alloc] initWithFrame:CGRectMake(bar.frame.origin.x, y - 5, bar.frame.size.width+15, UULabelHeight)];
+//            if ([valueString floatValue] != 0) {
+//                valueLabel.text = valueString;
+//            }
+//            if ([valueString floatValue] < 0) {
+//                valueLabel.textColor = [UIColor redColor];
+//            }
+//            [myScrollView addSubview:valueLabel];
+//
         }
     }
     
-    [myScrollView setContentOffset:CGPointMake(0, -10)];
+    [myScrollView setContentOffset:CGPointMake(0, 0)];
 }
 
 @end
