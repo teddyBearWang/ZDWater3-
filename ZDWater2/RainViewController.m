@@ -226,7 +226,7 @@
     
         RainCell *cell = (RainCell *)[[[NSBundle mainBundle] loadNibNamed:@"Rain" owner:self options:nil] lastObject];
         NSDictionary *dic = [listData objectAtIndex:indexPath.row];
-        cell.stationName.text = [[dic objectForKey:@"Adnm"] isEqual:@""]?@"--" : [dic objectForKey:@"Stnm"];
+        cell.stationName.text = [[dic objectForKey:@"Adnm"] isEqual:@""]?@"--" : [dic objectForKey:@"Adnm"];
         cell.oneHour.text = [[dic objectForKey:@"Last1Hours"] isEqual:@""] ? @"--" :[dic objectForKey:@"Last1Hours"];
         
         cell.threeHour.text = [[dic objectForKey:@"Last3Hours"] isEqual:@""] ? @"--" : [dic objectForKey:@"Last3Hours"];
@@ -241,9 +241,6 @@
 //这样的话，headView不随着cell滚动
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-//    UIView *headView = (UIView *)[[[NSBundle mainBundle] loadNibNamed:@"RainHeaderView" owner:self options:nil] lastObject];
-//    headView.backgroundColor = BG_COLOR;
-//    return headView;
     return self.myHeaderView;
 }
 

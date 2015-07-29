@@ -265,6 +265,30 @@ static  BOOL ret;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offSetY = _myTableView.contentOffset.y;
+    CGPoint stationOffSet = _myStationView.myTableView.contentOffset;
+    
+    stationOffSet.y = offSetY;
+    _myStationView.myTableView.contentOffset = stationOffSet;
+    
+    if (offSetY == 0) {
+        _myStationView.myTableView.contentOffset = CGPointZero;
+    }
+}
+
 #pragma mark - UUChartDataSource
 
 //横坐标标题数组
